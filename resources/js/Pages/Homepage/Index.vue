@@ -2,6 +2,7 @@
 import Header from '@/Components/Header.vue';
 import Hero from './Components/Hero.vue';
 import AzureServices from './Components/AzureServices.vue';
+import Certifications from './Components/Certifications.vue';
 </script>
 
 <template>
@@ -11,6 +12,7 @@ import AzureServices from './Components/AzureServices.vue';
         <main>
             <Hero />
             <AzureServices />
+            <Certifications />
         </main>
     </div>
 </template>
