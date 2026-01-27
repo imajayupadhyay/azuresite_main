@@ -1,10 +1,11 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import AuthModal from './AuthModal.vue';
 
 const isMenuOpen = ref(false);
 const isAuthModalOpen = ref(false);
+const isScrolled = ref(false);
 const page = usePage();
 
 const openAuthModal = () => {
@@ -15,6 +16,26 @@ const openAuthModal = () => {
 const closeAuthModal = () => {
     isAuthModalOpen.value = false;
 };
+
+const handleScroll = () => {
+    isScrolled.value = window.scrollY > 50;
+};
+
+const isHomePage = computed(() => {
+    return page.url === '/';
+});
+
+const isTransparent = computed(() => {
+    return isHomePage.value && !isScrolled.value;
+});
+
+onMounted(() => {
+    window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll);
+});
 
 const navigation = [
     { name: 'Home', href: '/' },
@@ -33,9 +54,14 @@ const isActive = (href) => {
 </script>
 
 <template>
-    <header class="fixed top-0 left-0 right-0 z-50">
-        <!-- Full Width Glass Header Container -->
-        <div class="bg-white/90 backdrop-blur-xl shadow-lg shadow-navy-900/5 border-b border-navy-200/50">
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <!-- Dynamic Header Container -->
+        <div 
+            class="transition-all duration-300"
+            :class="isTransparent 
+                ? 'bg-transparent backdrop-blur-md border-b border-white/10' 
+                : 'bg-white/90 backdrop-blur-xl shadow-lg shadow-navy-900/5 border-b border-navy-200/50'"
+        >
             <div class="max-w-7xl mx-auto px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     <!-- Logo with Cloud Design -->
@@ -66,8 +92,18 @@ const isActive = (href) => {
                             </svg>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-xl font-bold text-navy-900 group-hover:text-primary-600 transition-colors leading-none">AzureSkill</span>
-                            <span class="text-[10px] text-navy-500 font-medium tracking-wider uppercase">Cloud Learning</span>
+                            <span 
+                                class="text-xl font-bold transition-colors leading-none"
+                                :class="isTransparent ? 'text-white group-hover:text-primary-300' : 'text-navy-900 group-hover:text-primary-600'"
+                            >
+                                AzureSkill
+                            </span>
+                            <span 
+                                class="text-[10px] font-medium tracking-wider uppercase"
+                                :class="isTransparent ? 'text-primary-200' : 'text-navy-500'"
+                            >
+                                Cloud Learning
+                            </span>
                         </div>
                     </a>
 
@@ -78,13 +114,15 @@ const isActive = (href) => {
                             :key="item.name"
                             :href="item.href"
                             class="px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 relative"
-                            :class="isActive(item.href)
-                                ? 'text-primary-600'
-                                : 'text-navy-600 hover:text-navy-900 hover:bg-navy-50'"
+                            :class="[
+                                isActive(item.href) 
+                                    ? (isTransparent ? 'text-white bg-white/10' : 'text-primary-600')
+                                    : (isTransparent ? 'text-white/90 hover:text-white hover:bg-white/10' : 'text-navy-600 hover:text-navy-900 hover:bg-navy-50')
+                            ]"
                         >
                             {{ item.name }}
                             <div 
-                                v-if="isActive(item.href)"
+                                v-if="isActive(item.href) && !isTransparent"
                                 class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-700 rounded-full"
                             ></div>
                         </a>
@@ -107,7 +145,8 @@ const isActive = (href) => {
                     <!-- Mobile menu button -->
                     <button
                         @click="isMenuOpen = !isMenuOpen"
-                        class="lg:hidden p-2 rounded-lg text-navy-600 hover:bg-navy-100 active:scale-95 transition-all"
+                        class="lg:hidden p-2 rounded-lg active:scale-95 transition-all"
+                        :class="isTransparent ? 'text-white hover:bg-white/10' : 'text-navy-600 hover:bg-navy-100'"
                     >
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path
