@@ -8,6 +8,7 @@ const page = usePage();
 const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Tutorials', href: '/tutorials' },
+    { name: 'Certifications', href: '/certifications' },
     { name: 'Support', href: '/support' },
 ];
 

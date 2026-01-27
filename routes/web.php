@@ -14,3 +14,7 @@ Route::get('/tutorials', function () {
 Route::get('/support', function () {
     return Inertia::render('Support/Index');
 });
+
+Route::get('/certifications', function () {
+    return Inertia::render('Certifications/Index');
+});

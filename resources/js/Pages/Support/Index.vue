@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import Header from '@/Components/Header.vue';
+import Footer from '@/Components/Footer.vue';
 import SupportCategories from './Components/SupportCategories.vue';
 import ContactForm from './Components/ContactForm.vue';
 
@@ -180,6 +181,8 @@ const selectedCategory = ref(null);
                 </div>
             </div>
         </div>
+
+        <Footer />
     </div>
 </template>
 

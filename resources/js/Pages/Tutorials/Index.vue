@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import Header from '@/Components/Header.vue';
+import Footer from '@/Components/Footer.vue';
 import TutorialSidebar from './Components/TutorialSidebar.vue';
 import TutorialGrid from './Components/TutorialGrid.vue';
 
@@ -123,6 +124,8 @@ const handleSearch = (query) => {
                 />
             </div>
         </div>
+
+        <Footer />
     </div>
 </template>
 
