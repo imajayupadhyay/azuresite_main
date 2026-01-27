@@ -40,6 +40,7 @@ onUnmounted(() => {
 const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Tutorials', href: '/tutorials' },
+    { name: 'Live Training', href: '/live-training' },
     { name: 'Certifications', href: '/certifications' },
     { name: 'Support', href: '/support' },
 ];
