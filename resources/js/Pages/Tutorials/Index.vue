@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, Head } from '@inertiajs/vue3';
 import Header from '@/Components/Header.vue';
 import Footer from '@/Components/Footer.vue';
 import TutorialCard from './Components/TutorialCard.vue';
@@ -77,6 +77,12 @@ const filteredTutorials = computed(() => {
 
 <template>
     <div class="min-h-screen bg-gradient-to-br from-gray-50 to-primary-50/30">
+        <Head>
+            <title>Azure Tutorials - Learn Azure Services | AzureSkill</title>
+            <meta name="description" content="Browse 200+ comprehensive Azure tutorials covering Compute, Storage, Databases, AI/ML, Security, and DevOps. Step-by-step guides from beginner to advanced level." />
+            <meta name="keywords" content="Azure tutorials, Azure compute, Azure storage, Azure database, Azure AI, Azure security, Azure DevOps, cloud tutorials" />
+        </Head>
+        
         <Header />
         
         <!-- Hero Section -->

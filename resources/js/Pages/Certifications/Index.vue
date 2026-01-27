@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { Head } from '@inertiajs/vue3';
 import Header from '@/Components/Header.vue';
 import Footer from '@/Components/Footer.vue';
 import CertificationCard from './Components/CertificationCard.vue';
@@ -166,6 +167,12 @@ const filteredCertifications = computed(() => {
 
 <template>
     <div class="min-h-screen bg-gradient-to-br from-gray-50 to-primary-50/30">
+        <Head>
+            <title>Azure Certifications - Microsoft Azure Exam Preparation | AzureSkill</title>
+            <meta name="description" content="Prepare for 12 Microsoft Azure certifications including AZ-900, AZ-104, AZ-305. Complete exam guides, preparation resources, and learning paths for all levels." />
+            <meta name="keywords" content="Azure certification, AZ-900, AZ-104, AZ-204, AZ-305, Microsoft certification, Azure exam preparation, cloud certification" />
+        </Head>
+        
         <Header />
         
         <!-- Hero Section -->

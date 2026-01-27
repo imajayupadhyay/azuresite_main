@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { Head } from '@inertiajs/vue3';
 import Header from '@/Components/Header.vue';
 import Footer from '@/Components/Footer.vue';
 import SupportCategories from './Components/SupportCategories.vue';
@@ -10,6 +11,12 @@ const selectedCategory = ref(null);
 
 <template>
     <div class="min-h-screen bg-gradient-to-br from-gray-50 to-primary-50/30">
+        <Head>
+            <title>Support & Help Center - Azure Learning Support | AzureSkill</title>
+            <meta name="description" content="Get help with Azure tutorials, certifications, and technical issues. Browse our knowledge base, contact support, and find answers to frequently asked questions." />
+            <meta name="keywords" content="Azure support, Azure help, technical support, FAQ, contact support, help center, Azure assistance" />
+        </Head>
+        
         <Header />
         
         <!-- Hero Section -->
