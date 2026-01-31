@@ -9,6 +9,11 @@ const searchQuery = ref('');
 const isSidebarOpen = ref(false);
 const isHeroVisible = ref(false);
 
+// Helper to convert service name to URL slug
+const toSlug = (name) => {
+    return name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+};
+
 onMounted(() => {
     setTimeout(() => isHeroVisible.value = true, 100);
 
@@ -438,7 +443,7 @@ const totalFilteredCount = computed(() => {
                                     <a
                                         v-for="service in category.items"
                                         :key="service.name"
-                                        href="#"
+                                        :href="`/tutorials/${toSlug(service.name)}`"
                                         class="group flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary-50 transition-all duration-200 border border-transparent hover:border-primary-200"
                                     >
                                         <!-- Service Icon -->
