@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\TutorialController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,7 +19,8 @@ Route::get('/tutorials', [TutorialController::class, 'index']);
 Route::get('/tutorials/{slug}', [TutorialController::class, 'show']);
 
 // Certifications
-Route::get('/certifications', fn () => Inertia::render('Certifications/Index'));
+Route::get('/certifications', [CertificationController::class, 'index']);
+Route::get('/certifications/{slug}', [CertificationController::class, 'show']);
 
 // Live Training
 Route::get('/live-training', fn () => Inertia::render('LiveTraining/Index'));
