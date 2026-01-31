@@ -147,7 +147,7 @@ const steps = [
         <Header />
 
         <!-- Hero Section -->
-        <section class="relative pt-20 pb-8 overflow-hidden bg-gradient-to-br from-navy-950 via-primary-900 to-navy-900">
+        <section class="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-navy-950 via-primary-900 to-navy-900">
             <!-- Animated Background -->
             <div class="absolute inset-0">
                 <svg class="absolute w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
