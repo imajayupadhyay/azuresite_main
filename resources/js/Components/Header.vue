@@ -1,10 +1,11 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
 import AuthModal from './AuthModal.vue';
 
 const isMenuOpen = ref(false);
 const isAuthModalOpen = ref(false);
+const isProfileDropdownOpen = ref(false);
 const isScrolled = ref(false);
 const page = usePage();
 
@@ -16,6 +17,18 @@ const openAuthModal = () => {
 const closeAuthModal = () => {
     isAuthModalOpen.value = false;
 };
+
+const toggleProfileDropdown = () => {
+    isProfileDropdownOpen.value = !isProfileDropdownOpen.value;
+};
+
+const handleLogout = () => {
+    if (confirm('Are you sure you want to logout?')) {
+        router.post(route('customer.logout'));
+    }
+};
+
+const customer = computed(() => page.props.customer);
 
 const handleScroll = () => {
     isScrolled.value = window.scrollY > 50;
@@ -131,8 +144,87 @@ const isActive = (href) => {
 
                     <!-- Right Actions -->
                     <div class="hidden lg:flex items-center space-x-4">
-                        <!-- Login Button -->
+                        <!-- Customer Profile Dropdown (when logged in) -->
+                        <div v-if="customer" class="relative">
+                            <button
+                                @click="toggleProfileDropdown"
+                                class="flex items-center space-x-3 px-4 py-2 rounded-lg transition-all duration-200"
+                                :class="isTransparent ? 'hover:bg-white/10' : 'hover:bg-gray-100'"
+                            >
+                                <!-- Avatar -->
+                                <div class="h-9 w-9 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white font-semibold text-sm shadow-lg">
+                                    {{ customer.initials }}
+                                </div>
+                                <!-- Name -->
+                                <span 
+                                    class="font-semibold text-sm"
+                                    :class="isTransparent ? 'text-white' : 'text-navy-900'"
+                                >
+                                    {{ customer.name }}
+                                </span>
+                                <!-- Dropdown Icon -->
+                                <svg 
+                                    class="w-4 h-4 transition-transform"
+                                    :class="[
+                                        isProfileDropdownOpen ? 'rotate-180' : '',
+                                        isTransparent ? 'text-white' : 'text-gray-600'
+                                    ]"
+                                    fill="none" 
+                                    stroke="currentColor" 
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+
+                            <!-- Dropdown Menu -->
+                            <transition
+                                enter-active-class="transition ease-out duration-200"
+                                enter-from-class="opacity-0 scale-95"
+                                enter-to-class="opacity-100 scale-100"
+                                leave-active-class="transition ease-in duration-150"
+                                leave-from-class="opacity-100 scale-100"
+                                leave-to-class="opacity-0 scale-95"
+                            >
+                                <div 
+                                    v-show="isProfileDropdownOpen"
+                                    class="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-gray-200 py-2 z-50"
+                                >
+                                    <!-- User Info -->
+                                    <div class="px-4 py-3 border-b border-gray-100">
+                                        <p class="text-sm font-semibold text-gray-900">{{ customer.name }}</p>
+                                        <p class="text-xs text-gray-500 truncate">{{ customer.email }}</p>
+                                    </div>
+
+                                    <!-- Menu Items -->
+                                    <a
+                                        :href="route('customer.profile')"
+                                        class="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                                    >
+                                        <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
+                                        My Profile
+                                    </a>
+
+                                    <div class="border-t border-gray-100 my-1"></div>
+
+                                    <button
+                                        @click="handleLogout"
+                                        class="flex items-center w-full px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                                    >
+                                        <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                        </svg>
+                                        Logout
+                                    </button>
+                                </div>
+                            </transition>
+                        </div>
+
+                        <!-- Login Button (when not logged in) -->
                         <button
+                            v-else
                             @click="openAuthModal"
                             class="inline-flex items-center px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 rounded-lg transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-primary-600/30"
                         >
