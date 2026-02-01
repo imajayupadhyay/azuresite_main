@@ -3,8 +3,8 @@ import { Head } from '@inertiajs/vue3';
 import Header from '@/Components/Header.vue';
 import Footer from '@/Components/Footer.vue';
 import Hero from './Components/Hero.vue';
-import AzureServices from './Components/AzureServices.vue';
-import Certifications from './Components/Certifications.vue';
+import Features from './Components/Features.vue';
+import CallToAction from './Components/CallToAction.vue';
 </script>
 
 <template>
@@ -14,13 +14,18 @@ import Certifications from './Components/Certifications.vue';
             <meta name="description" content="Learn Microsoft Azure with 200+ free hands-on tutorials, comprehensive guides, and certification preparation. Master Azure services from beginner to expert level." />
             <meta name="keywords" content="Azure tutorials, Azure certification, Microsoft Azure, cloud computing, Azure learning, Azure training, free Azure courses" />
         </Head>
-        
+
         <Header />
 
         <main>
+            <!-- Section 1: Hero - Modern SVG background with floating shapes -->
             <Hero />
-            <AzureServices />
-            <Certifications />
+
+            <!-- Section 2: Features - Card-based showcase of offerings -->
+            <Features />
+
+            <!-- Section 3: Call to Action - Stats and CTA -->
+            <CallToAction />
         </main>
 
         <Footer />

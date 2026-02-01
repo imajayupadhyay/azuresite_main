@@ -9,6 +9,7 @@
     <link rel="alternate icon" href="/favicon.ico">
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @routes
     @inertiaHead
 </head>
 <body class="antialiased">

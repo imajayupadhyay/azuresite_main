@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
+import { router, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
     isOpen: {
@@ -9,15 +10,18 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['close']);
+const page = usePage();
 
 const activeTab = ref('login');
-const loginForm = ref({
+const processing = ref(false);
+
+const loginForm = reactive({
     email: '',
     password: '',
     remember: false
 });
 
-const signupForm = ref({
+const signupForm = reactive({
     name: '',
     email: '',
     password: '',
@@ -26,15 +30,39 @@ const signupForm = ref({
 });
 
 const handleLogin = () => {
-    console.log('Login:', loginForm.value);
-    // Handle login logic here
-    alert('Login functionality - Connect to your backend');
+    processing.value = true;
+
+    router.post(route('customer.login'), loginForm, {
+        preserveScroll: true,
+        onSuccess: () => {
+            emit('close');
+            loginForm.email = '';
+            loginForm.password = '';
+            loginForm.remember = false;
+        },
+        onFinish: () => {
+            processing.value = false;
+        }
+    });
 };
 
 const handleSignup = () => {
-    console.log('Signup:', signupForm.value);
-    // Handle signup logic here
-    alert('Signup functionality - Connect to your backend');
+    processing.value = true;
+
+    router.post(route('customer.register'), signupForm, {
+        preserveScroll: true,
+        onSuccess: () => {
+            emit('close');
+            signupForm.name = '';
+            signupForm.email = '';
+            signupForm.password = '';
+            signupForm.password_confirmation = '';
+            signupForm.terms = false;
+        },
+        onFinish: () => {
+            processing.value = false;
+        }
+    });
 };
 
 const closeModal = () => {
@@ -120,6 +148,21 @@ const closeModal = () => {
                     <!-- Forms Container -->
                     <div class="p-8">
                         <!-- Login Form -->
+                        <!-- Error Messages -->
+                        <div v-if="$page.props.errors && Object.keys($page.props.errors).length > 0" class="mb-4 bg-red-50 border-2 border-red-200 rounded-lg p-4">
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 text-red-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div>
+                                    <p class="text-red-800 font-medium mb-1 text-sm">Please fix the following errors:</p>
+                                    <ul class="list-disc list-inside text-sm text-red-700">
+                                        <li v-for="(error, key) in $page.props.errors" :key="key">{{ error }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
                         <transition
                             enter-active-class="transition-all duration-300 ease-out"
                             enter-from-class="opacity-0 translate-x-4"
@@ -137,8 +180,9 @@ const closeModal = () => {
                                         v-model="loginForm.email"
                                         type="email" 
                                         required
+                                        :disabled="processing"
                                         placeholder="you@example.com"
-                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     />
                                 </div>
 
@@ -149,8 +193,9 @@ const closeModal = () => {
                                         v-model="loginForm.password"
                                         type="password" 
                                         required
+                                        :disabled="processing"
                                         placeholder="Enter your password"
-                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     />
                                 </div>
 
@@ -172,9 +217,14 @@ const closeModal = () => {
                                 <!-- Submit Button -->
                                 <button 
                                     type="submit"
-                                    class="w-full px-6 py-3.5 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg"
+                                    :disabled="processing"
+                                    class="w-full px-6 py-3.5 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center"
                                 >
-                                    Login to Your Account
+                                    <svg v-if="processing" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    {{ processing ? 'Logging in...' : 'Login to Your Account' }}
                                 </button>
 
                                 <!-- Social Login -->
@@ -215,8 +265,9 @@ const closeModal = () => {
                                         v-model="signupForm.name"
                                         type="text" 
                                         required
+                                        :disabled="processing"
                                         placeholder="John Doe"
-                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     />
                                 </div>
 
@@ -227,8 +278,9 @@ const closeModal = () => {
                                         v-model="signupForm.email"
                                         type="email" 
                                         required
+                                        :disabled="processing"
                                         placeholder="you@example.com"
-                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     />
                                 </div>
 
@@ -239,8 +291,9 @@ const closeModal = () => {
                                         v-model="signupForm.password"
                                         type="password" 
                                         required
+                                        :disabled="processing"
                                         placeholder="Create a strong password"
-                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     />
                                 </div>
 
@@ -251,8 +304,9 @@ const closeModal = () => {
                                         v-model="signupForm.password_confirmation"
                                         type="password" 
                                         required
+                                        :disabled="processing"
                                         placeholder="Confirm your password"
-                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     />
                                 </div>
 
@@ -277,9 +331,14 @@ const closeModal = () => {
                                 <!-- Submit Button -->
                                 <button 
                                     type="submit"
-                                    class="w-full px-6 py-3.5 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg"
+                                    :disabled="processing"
+                                    class="w-full px-6 py-3.5 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center"
                                 >
-                                    Create Your Account
+                                    <svg v-if="processing" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    {{ processing ? 'Creating Account...' : 'Create Your Account' }}
                                 </button>
 
                                 <!-- Social Login -->

@@ -27,11 +27,16 @@ const getDifficultyColor = (difficulty) => {
     };
     return colors[difficulty] || 'bg-gray-100 text-gray-700';
 };
+
+const getSlug = (code) => {
+    return code.toLowerCase();
+};
 </script>
 
 <template>
-    <div
-        class="group relative bg-white/70 backdrop-blur-xl rounded-2xl border-2 border-primary-200 hover:border-primary-400 p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
+    <a
+        :href="`/certifications/${getSlug(certification.code)}`"
+        class="group relative bg-white/70 backdrop-blur-xl rounded-2xl border-2 border-primary-200 hover:border-primary-400 p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 block"
         :style="{ transitionDelay: `${index * 50}ms` }"
     >
         <!-- Glass Effect Background -->
@@ -117,12 +122,12 @@ const getDifficultyColor = (difficulty) => {
             </div>
 
             <!-- CTA Button -->
-            <button class="w-full px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 text-white font-semibold rounded-xl transition-all duration-300 group-hover:scale-105 flex items-center justify-center shadow-lg">
-                <span>Start Preparation</span>
+            <div class="w-full px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 group-hover:from-primary-500 group-hover:to-primary-600 text-white font-semibold rounded-xl transition-all duration-300 group-hover:scale-105 flex items-center justify-center shadow-lg">
+                <span>View Details</span>
                 <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                 </svg>
-            </button>
+            </div>
         </div>
-    </div>
+    </a>
 </template>
