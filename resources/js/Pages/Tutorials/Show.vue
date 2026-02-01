@@ -106,9 +106,17 @@ const currentSectionTitle = computed(() => {
 <template>
     <div class="min-h-screen bg-navy-50">
         <Head>
-            <title>{{ service.name }} - Azure Tutorial | AzureSkill</title>
-            <meta name="description" :content="service.description" />
+            <title>{{ service.metaTitle || `${service.name} - Azure Tutorial | AzureSkill` }}</title>
+            <meta name="description" :content="service.metaDescription || service.description" />
             <meta name="keywords" :content="`Azure ${service.name}, ${service.name} tutorial, Azure cloud, ${service.category}`" />
+            <!-- Open Graph / Social Media -->
+            <meta property="og:title" :content="service.metaTitle || `${service.name} - Azure Tutorial`" />
+            <meta property="og:description" :content="service.metaDescription || service.description" />
+            <meta property="og:type" content="article" />
+            <!-- Twitter -->
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" :content="service.metaTitle || `${service.name} - Azure Tutorial`" />
+            <meta name="twitter:description" :content="service.metaDescription || service.description" />
         </Head>
 
         <Header />

@@ -17,6 +17,8 @@ const form = ref({
     name: '',
     slug: '',
     description: '',
+    meta_title: '',
+    meta_description: '',
     icon_identifier: '',
     video_url: '',
     video_thumbnail: '',
@@ -262,6 +264,8 @@ const submit = () => {
     formData.append('name', form.value.name);
     formData.append('slug', form.value.slug || '');
     formData.append('description', form.value.description);
+    formData.append('meta_title', form.value.meta_title || '');
+    formData.append('meta_description', form.value.meta_description || '');
     formData.append('icon_identifier', form.value.icon_identifier || '');
     formData.append('video_url', form.value.video_url || '');
     formData.append('video_thumbnail', form.value.video_thumbnail || '');
@@ -538,6 +542,98 @@ const getBlockTypeConfig = (type) => {
                                         </svg>
                                         {{ errors.description }}
                                     </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SEO Meta Tags -->
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div class="px-6 py-4 bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-8 w-8 rounded-lg bg-green-100 flex items-center justify-center">
+                                        <svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-lg font-semibold text-gray-900">SEO Meta Tags</h2>
+                                        <p class="text-xs text-gray-500">Optimize for search engines</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <!-- Meta Title -->
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <label class="block text-sm font-medium text-gray-700">
+                                            Meta Title
+                                        </label>
+                                        <span :class="[
+                                            'text-xs font-medium',
+                                            (form.meta_title?.length || 0) > 60 ? 'text-amber-600' : 'text-gray-400'
+                                        ]">
+                                            {{ form.meta_title?.length || 0 }}/70
+                                        </span>
+                                    </div>
+                                    <input
+                                        v-model="form.meta_title"
+                                        type="text"
+                                        maxlength="70"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+                                        placeholder="e.g., Learn Azure Virtual Machines - Complete Tutorial"
+                                    />
+                                    <p class="text-xs text-gray-500">Recommended: 50-60 characters. Leave empty to use service name.</p>
+                                    <p v-if="errors.meta_title" class="text-red-500 text-sm flex items-center gap-1">
+                                        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                        {{ errors.meta_title }}
+                                    </p>
+                                </div>
+
+                                <!-- Meta Description -->
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <label class="block text-sm font-medium text-gray-700">
+                                            Meta Description
+                                        </label>
+                                        <span :class="[
+                                            'text-xs font-medium',
+                                            (form.meta_description?.length || 0) > 155 ? 'text-amber-600' : 'text-gray-400'
+                                        ]">
+                                            {{ form.meta_description?.length || 0 }}/160
+                                        </span>
+                                    </div>
+                                    <textarea
+                                        v-model="form.meta_description"
+                                        rows="3"
+                                        maxlength="160"
+                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white resize-none"
+                                        placeholder="Brief description for search engine results..."
+                                    ></textarea>
+                                    <p class="text-xs text-gray-500">Recommended: 150-160 characters. Leave empty to use service description.</p>
+                                    <p v-if="errors.meta_description" class="text-red-500 text-sm flex items-center gap-1">
+                                        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                        {{ errors.meta_description }}
+                                    </p>
+                                </div>
+
+                                <!-- SEO Preview -->
+                                <div class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                    <p class="text-xs font-medium text-gray-500 mb-2">Search Preview</p>
+                                    <div class="space-y-1">
+                                        <p class="text-blue-600 text-lg font-medium truncate">
+                                            {{ form.meta_title || form.name || 'Service Title' }}
+                                        </p>
+                                        <p class="text-green-700 text-sm">
+                                            azureskills.com/tutorials/{{ form.slug || 'service-slug' }}
+                                        </p>
+                                        <p class="text-gray-600 text-sm line-clamp-2">
+                                            {{ form.meta_description || form.description || 'Service description will appear here...' }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

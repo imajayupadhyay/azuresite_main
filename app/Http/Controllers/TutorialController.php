@@ -88,6 +88,8 @@ class TutorialController extends Controller
             'category' => $service->category->name,
             'categorySlug' => $service->category->slug,
             'description' => $service->description,
+            'metaTitle' => $service->meta_title,
+            'metaDescription' => $service->meta_description,
             'difficulty' => ucfirst($service->difficulty),
             'tutorials' => $service->tutorialSections->count(),
             'videoDuration' => $service->video_duration,

@@ -145,12 +145,13 @@
 </template>
 
 <script setup>
-import { Link, usePage } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 
-const page = usePage();
-
-const isActive = (routeName) => {
-    return page.url.startsWith('/' + routeName.replace('admin.', 'admin/'));
+const isActive = (routePattern) => {
+    // Check exact match first
+    if (route().current(routePattern)) return true;
+    // Check if any nested route matches (e.g., admin.support.index, admin.support.show)
+    return route().current(routePattern + '.*');
 };
 
 const getInitials = (name) => {
