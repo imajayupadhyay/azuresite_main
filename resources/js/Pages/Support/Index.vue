@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { Head } from '@inertiajs/vue3';
+import { ref, reactive, onMounted } from 'vue';
+import { Head, router } from '@inertiajs/vue3';
 import Header from '@/Components/Header.vue';
 import Footer from '@/Components/Footer.vue';
 
@@ -8,9 +8,10 @@ const isHeroVisible = ref(false);
 const showSuccessModal = ref(false);
 const isSubmitting = ref(false);
 
-const formData = ref({
+const formData = reactive({
     name: '',
     email: '',
+    category: '',
     subject: '',
     message: ''
 });
@@ -19,17 +20,28 @@ onMounted(() => {
     setTimeout(() => isHeroVisible.value = true, 100);
 });
 
-const submitForm = async () => {
+const submitForm = () => {
     isSubmitting.value = true;
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    isSubmitting.value = false;
-    showSuccessModal.value = true;
-
-    // Reset form
-    formData.value = { name: '', email: '', subject: '', message: '' };
+    router.post(route('support.store'), formData, {
+        preserveScroll: true,
+        onSuccess: (page) => {
+            // Reset form
+            formData.name = '';
+            formData.email = '';
+            formData.category = '';
+            formData.subject = '';
+            formData.message = '';
+            
+            // Show success modal
+            setTimeout(() => {
+                showSuccessModal.value = true;
+            }, 100);
+        },
+        onFinish: () => {
+            isSubmitting.value = false;
+        }
+    });
 };
 
 const closeModal = () => {
@@ -186,7 +198,7 @@ const faqs = [
                                         </div>
                                     </div>
 
-                                    <!-- Subject Field -->
+                                    <!-- Category Field -->
                                     <div class="group">
                                         <div class="relative">
                                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -195,22 +207,41 @@ const faqs = [
                                                 </svg>
                                             </div>
                                             <select
-                                                v-model="formData.subject"
+                                                v-model="formData.category"
                                                 required
                                                 class="w-full pl-12 pr-4 py-4 bg-navy-50/50 border-2 border-transparent rounded-2xl text-navy-900 focus:bg-white focus:border-primary-500 focus:shadow-lg focus:shadow-primary-500/10 outline-none transition-all duration-300 appearance-none cursor-pointer"
                                             >
-                                                <option value="">Select a topic</option>
-                                                <option value="general">General Inquiry</option>
+                                                <option value="">Select a category</option>
                                                 <option value="technical">Technical Support</option>
-                                                <option value="certification">Certification Help</option>
-                                                <option value="training">Live Training</option>
-                                                <option value="feedback">Feedback</option>
+                                                <option value="account">Account & Billing</option>
+                                                <option value="tutorials">Tutorial Help</option>
+                                                <option value="certification">Certifications</option>
+                                                <option value="labs">Hands-on Labs</option>
+                                                <option value="feedback">Feedback & Suggestions</option>
                                             </select>
                                             <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
                                                 <svg class="w-5 h-5 text-navy-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                                 </svg>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Subject Field -->
+                                    <div class="group">
+                                        <div class="relative">
+                                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <svg class="w-5 h-5 text-navy-300 group-focus-within:text-primary-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                                </svg>
+                                            </div>
+                                            <input
+                                                v-model="formData.subject"
+                                                type="text"
+                                                required
+                                                placeholder="Brief subject of your inquiry"
+                                                class="w-full pl-12 pr-4 py-4 bg-navy-50/50 border-2 border-transparent rounded-2xl text-navy-900 placeholder-navy-400 focus:bg-white focus:border-primary-500 focus:shadow-lg focus:shadow-primary-500/10 outline-none transition-all duration-300"
+                                            />
                                         </div>
                                     </div>
 
