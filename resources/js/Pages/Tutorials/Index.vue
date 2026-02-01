@@ -4,15 +4,18 @@ import { Head } from '@inertiajs/vue3';
 import Header from '@/Components/Header.vue';
 import Footer from '@/Components/Footer.vue';
 
+// Props from backend
+const props = defineProps({
+    categories: {
+        type: Array,
+        default: () => []
+    }
+});
+
 const selectedCategory = ref('all');
 const searchQuery = ref('');
 const isSidebarOpen = ref(false);
 const isHeroVisible = ref(false);
-
-// Helper to convert service name to URL slug
-const toSlug = (name) => {
-    return name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-};
 
 onMounted(() => {
     setTimeout(() => isHeroVisible.value = true, 100);
@@ -22,153 +25,42 @@ onMounted(() => {
     if (searchParam) searchQuery.value = searchParam;
 });
 
-// Azure Services organized by category with official icon colors
-const services = {
-    compute: {
-        name: 'Compute',
-        icon: 'compute',
-        color: '#0078D4',
-        items: [
-            { name: 'Virtual Machines', icon: 'vm', tutorials: 12 },
-            { name: 'App Service', icon: 'app-service', tutorials: 8 },
-            { name: 'Functions', icon: 'functions', tutorials: 6 },
-            { name: 'Container Instances', icon: 'container', tutorials: 5 },
-            { name: 'Kubernetes Service', icon: 'aks', tutorials: 10 },
-            { name: 'Batch', icon: 'batch', tutorials: 3 },
-            { name: 'Cloud Services', icon: 'cloud-services', tutorials: 4 },
-            { name: 'VM Scale Sets', icon: 'vmss', tutorials: 5 },
-        ]
-    },
-    storage: {
-        name: 'Storage',
-        icon: 'storage',
-        color: '#0078D4',
-        items: [
-            { name: 'Storage Accounts', icon: 'storage-account', tutorials: 8 },
-            { name: 'Blob Storage', icon: 'blob', tutorials: 10 },
-            { name: 'File Storage', icon: 'file-storage', tutorials: 5 },
-            { name: 'Queue Storage', icon: 'queue', tutorials: 4 },
-            { name: 'Table Storage', icon: 'table', tutorials: 3 },
-            { name: 'Data Lake', icon: 'data-lake', tutorials: 6 },
-            { name: 'Managed Disks', icon: 'disk', tutorials: 5 },
-        ]
-    },
-    networking: {
-        name: 'Networking',
-        icon: 'networking',
-        color: '#0078D4',
-        items: [
-            { name: 'Virtual Network', icon: 'vnet', tutorials: 8 },
-            { name: 'Load Balancer', icon: 'load-balancer', tutorials: 6 },
-            { name: 'Application Gateway', icon: 'app-gateway', tutorials: 5 },
-            { name: 'VPN Gateway', icon: 'vpn', tutorials: 4 },
-            { name: 'Azure DNS', icon: 'dns', tutorials: 3 },
-            { name: 'CDN', icon: 'cdn', tutorials: 4 },
-            { name: 'Front Door', icon: 'front-door', tutorials: 5 },
-            { name: 'ExpressRoute', icon: 'expressroute', tutorials: 3 },
-        ]
-    },
-    database: {
-        name: 'Databases',
-        icon: 'database',
-        color: '#0078D4',
-        items: [
-            { name: 'SQL Database', icon: 'sql', tutorials: 12 },
-            { name: 'Cosmos DB', icon: 'cosmos', tutorials: 10 },
-            { name: 'MySQL', icon: 'mysql', tutorials: 6 },
-            { name: 'PostgreSQL', icon: 'postgresql', tutorials: 5 },
-            { name: 'SQL Managed Instance', icon: 'sql-mi', tutorials: 4 },
-            { name: 'Redis Cache', icon: 'redis', tutorials: 5 },
-            { name: 'MariaDB', icon: 'mariadb', tutorials: 3 },
-        ]
-    },
-    ai: {
-        name: 'AI + ML',
-        icon: 'ai',
-        color: '#0078D4',
-        items: [
-            { name: 'Machine Learning', icon: 'ml', tutorials: 15 },
-            { name: 'Cognitive Services', icon: 'cognitive', tutorials: 12 },
-            { name: 'Azure OpenAI', icon: 'openai', tutorials: 8 },
-            { name: 'Bot Service', icon: 'bot', tutorials: 5 },
-            { name: 'Computer Vision', icon: 'vision', tutorials: 6 },
-            { name: 'Speech Services', icon: 'speech', tutorials: 4 },
-            { name: 'Language Service', icon: 'language', tutorials: 5 },
-            { name: 'Document Intelligence', icon: 'document', tutorials: 4 },
-        ]
-    },
-    security: {
-        name: 'Security',
-        icon: 'security',
-        color: '#0078D4',
-        items: [
-            { name: 'Microsoft Entra ID', icon: 'entra', tutorials: 10 },
-            { name: 'Key Vault', icon: 'keyvault', tutorials: 8 },
-            { name: 'Security Center', icon: 'security-center', tutorials: 6 },
-            { name: 'Sentinel', icon: 'sentinel', tutorials: 5 },
-            { name: 'DDoS Protection', icon: 'ddos', tutorials: 3 },
-            { name: 'Firewall', icon: 'firewall', tutorials: 5 },
-        ]
-    },
-    devops: {
-        name: 'DevOps',
-        icon: 'devops',
-        color: '#0078D4',
-        items: [
-            { name: 'Azure DevOps', icon: 'azure-devops', tutorials: 12 },
-            { name: 'GitHub Actions', icon: 'github', tutorials: 8 },
-            { name: 'Container Registry', icon: 'acr', tutorials: 6 },
-            { name: 'Pipelines', icon: 'pipelines', tutorials: 10 },
-            { name: 'Repos', icon: 'repos', tutorials: 5 },
-            { name: 'Artifacts', icon: 'artifacts', tutorials: 4 },
-        ]
-    },
-    analytics: {
-        name: 'Analytics',
-        icon: 'analytics',
-        color: '#0078D4',
-        items: [
-            { name: 'Synapse Analytics', icon: 'synapse', tutorials: 10 },
-            { name: 'Data Factory', icon: 'data-factory', tutorials: 8 },
-            { name: 'Databricks', icon: 'databricks', tutorials: 7 },
-            { name: 'Stream Analytics', icon: 'stream', tutorials: 5 },
-            { name: 'HDInsight', icon: 'hdinsight', tutorials: 4 },
-            { name: 'Power BI Embedded', icon: 'powerbi', tutorials: 6 },
-        ]
-    },
-    integration: {
-        name: 'Integration',
-        icon: 'integration',
-        color: '#0078D4',
-        items: [
-            { name: 'Logic Apps', icon: 'logic-apps', tutorials: 8 },
-            { name: 'Service Bus', icon: 'service-bus', tutorials: 6 },
-            { name: 'Event Grid', icon: 'event-grid', tutorials: 5 },
-            { name: 'Event Hubs', icon: 'event-hubs', tutorials: 5 },
-            { name: 'API Management', icon: 'apim', tutorials: 7 },
-        ]
-    },
-    monitor: {
-        name: 'Monitor',
-        icon: 'monitor',
-        color: '#0078D4',
-        items: [
-            { name: 'Azure Monitor', icon: 'monitor-icon', tutorials: 8 },
-            { name: 'Log Analytics', icon: 'log-analytics', tutorials: 6 },
-            { name: 'Application Insights', icon: 'app-insights', tutorials: 7 },
-            { name: 'Alerts', icon: 'alerts', tutorials: 4 },
-        ]
-    }
-};
+// Transform backend categories into services object format for the template
+const services = computed(() => {
+    const result = {};
+    props.categories.forEach(category => {
+        result[category.slug] = {
+            name: category.name,
+            icon: category.icon || category.slug,
+            color: '#0078D4',
+            items: category.services.map(service => ({
+                name: service.name,
+                slug: service.slug,
+                icon: service.icon || 'default',
+                tutorials: service.tutorials || 0,
+                difficulty: service.difficulty
+            }))
+        };
+    });
+    return result;
+});
 
-const categories = computed(() => {
+// Sidebar categories list
+const sidebarCategories = computed(() => {
+    const totalServices = props.categories.reduce((sum, cat) => sum + (cat.services?.length || 0), 0);
+
     const cats = [
-        { id: 'all', name: 'All Services', icon: 'grid', count: Object.values(services).reduce((sum, cat) => sum + cat.items.length, 0) },
+        { id: 'all', name: 'All Services', icon: 'grid', count: totalServices },
         { id: 'favorites', name: 'Favorites', icon: 'star', count: 0 },
     ];
 
-    Object.entries(services).forEach(([id, cat]) => {
-        cats.push({ id, name: cat.name, icon: cat.icon, count: cat.items.length });
+    props.categories.forEach(category => {
+        cats.push({
+            id: category.slug,
+            name: category.name,
+            icon: category.icon || category.slug,
+            count: category.services?.length || 0
+        });
     });
 
     return cats;
@@ -176,12 +68,13 @@ const categories = computed(() => {
 
 const filteredServices = computed(() => {
     const query = searchQuery.value.toLowerCase().trim();
+    const servicesObj = services.value;
 
     if (selectedCategory.value === 'all') {
-        if (!query) return services;
+        if (!query) return servicesObj;
 
         const filtered = {};
-        Object.entries(services).forEach(([key, cat]) => {
+        Object.entries(servicesObj).forEach(([key, cat]) => {
             const items = cat.items.filter(item => item.name.toLowerCase().includes(query));
             if (items.length > 0) {
                 filtered[key] = { ...cat, items };
@@ -194,7 +87,7 @@ const filteredServices = computed(() => {
         return {};
     }
 
-    const cat = services[selectedCategory.value];
+    const cat = servicesObj[selectedCategory.value];
     if (!cat) return {};
 
     if (!query) {
@@ -209,6 +102,10 @@ const filteredServices = computed(() => {
 
 const totalFilteredCount = computed(() => {
     return Object.values(filteredServices.value).reduce((sum, cat) => sum + cat.items.length, 0);
+});
+
+const totalServicesCount = computed(() => {
+    return props.categories.reduce((sum, cat) => sum + (cat.services?.length || 0), 0);
 });
 </script>
 
@@ -276,7 +173,7 @@ const totalFilteredCount = computed(() => {
                     <!-- Badge -->
                     <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
                         <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-                        <span class="text-sm text-primary-100">{{ Object.values(services).reduce((sum, cat) => sum + cat.items.length, 0) }}+ Azure Services</span>
+                        <span class="text-sm text-primary-100">{{ totalServicesCount }}+ Azure Services</span>
                     </div>
 
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
@@ -352,7 +249,7 @@ const totalFilteredCount = computed(() => {
 
                         <nav class="space-y-1">
                             <button
-                                v-for="category in categories"
+                                v-for="category in sidebarCategories"
                                 :key="category.id"
                                 @click="selectedCategory = category.id; isSidebarOpen = false"
                                 class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200"
@@ -419,7 +316,7 @@ const totalFilteredCount = computed(() => {
                     <div class="flex items-center justify-between mb-6">
                         <div>
                             <h2 class="text-xl font-bold text-navy-900">
-                                {{ categories.find(c => c.id === selectedCategory)?.name || 'All Services' }}
+                                {{ sidebarCategories.find(c => c.id === selectedCategory)?.name || 'All Services' }}
                             </h2>
                             <p class="text-sm text-navy-500">{{ totalFilteredCount }} services found</p>
                         </div>
@@ -442,8 +339,8 @@ const totalFilteredCount = computed(() => {
                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                                     <a
                                         v-for="service in category.items"
-                                        :key="service.name"
-                                        :href="`/tutorials/${toSlug(service.name)}`"
+                                        :key="service.slug"
+                                        :href="`/tutorials/${service.slug}`"
                                         class="group flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary-50 transition-all duration-200 border border-transparent hover:border-primary-200"
                                     >
                                         <!-- Service Icon -->
