@@ -76,6 +76,24 @@ class Service extends Model
     }
 
     /**
+     * Get tutorial sections for this service
+     */
+    public function tutorialSections(): HasMany
+    {
+        return $this->hasMany(TutorialSection::class)->orderBy('order');
+    }
+
+    /**
+     * Get active tutorial sections
+     */
+    public function activeTutorialSections(): HasMany
+    {
+        return $this->hasMany(TutorialSection::class)
+            ->where('is_active', true)
+            ->orderBy('order');
+    }
+
+    /**
      * Scope for active services
      */
     public function scopeActive($query)

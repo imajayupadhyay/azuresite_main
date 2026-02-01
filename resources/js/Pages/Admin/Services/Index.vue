@@ -99,15 +99,15 @@
                                 >
                                     Clear Filters
                                 </button>
-                                <button
-                                    @click="openAddModal"
+                                <a
+                                    :href="route('admin.services.create')"
                                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition duration-200"
                                 >
                                     <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                                     </svg>
                                     Add Service
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -168,12 +168,12 @@
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <button
-                                                @click="editService(service)"
+                                            <a
+                                                :href="route('admin.services.edit', service.id)"
                                                 class="text-blue-600 hover:text-blue-900 mr-3"
                                             >
                                                 Edit
-                                            </button>
+                                            </a>
                                             <button
                                                 @click="deleteService(service)"
                                                 class="text-red-600 hover:text-red-900"

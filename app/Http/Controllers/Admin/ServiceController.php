@@ -55,6 +55,18 @@ class ServiceController extends Controller
     }
 
     /**
+     * Show the form for creating a new service
+     */
+    public function create()
+    {
+        $categories = ServiceCategory::active()->ordered()->get();
+        
+        return Inertia::render('Admin/Services/Create', [
+            'categories' => $categories,
+        ]);
+    }
+
+    /**
      * Store a newly created service
      */
     public function store(Request $request)
@@ -72,11 +84,74 @@ class ServiceController extends Controller
             'difficulty' => ['required', 'in:beginner,intermediate,advanced'],
             'order' => ['required', 'integer', 'min:0'],
             'is_active' => ['boolean'],
+            'tutorial_sections' => ['nullable', 'array'],
+            'tutorial_sections.*.title' => ['required', 'string', 'max:255'],
+            'tutorial_sections.*.slug' => ['nullable', 'string', 'max:255'],
+            'tutorial_sections.*.order' => ['required', 'integer', 'min:0'],
+            'tutorial_sections.*.is_active' => ['boolean'],
+            'tutorial_sections.*.content_blocks' => ['nullable', 'array'],
+            'tutorial_sections.*.content_blocks.*.type' => ['required', 'in:content,code,tip,warning,info'],
+            'tutorial_sections.*.content_blocks.*.content' => ['required', 'string'],
+            'tutorial_sections.*.content_blocks.*.code_language' => ['nullable', 'string', 'max:50'],
+            'tutorial_sections.*.content_blocks.*.order' => ['required', 'integer', 'min:0'],
         ]);
 
-        Service::create($validated);
+        // Handle video upload if present
+        if ($request->hasFile('video_file')) {
+            $videoPath = $request->file('video_file')->store('videos', 'public');
+            $validated['video_url'] = asset('storage/' . $videoPath);
+        }
 
-        return redirect()->back()->with('success', 'Service created successfully!');
+        // Handle video thumbnail upload if present
+        if ($request->hasFile('video_thumbnail_file')) {
+            $thumbnailPath = $request->file('video_thumbnail_file')->store('thumbnails', 'public');
+            $validated['video_thumbnail'] = asset('storage/' . $thumbnailPath);
+        }
+
+        // Create service
+        $service = Service::create($validated);
+
+        // Create tutorial sections if provided
+        if (!empty($validated['tutorial_sections'])) {
+            foreach ($validated['tutorial_sections'] as $sectionData) {
+                $contentBlocks = $sectionData['content_blocks'] ?? [];
+                unset($sectionData['content_blocks']);
+                
+                $section = $service->tutorialSections()->create($sectionData);
+                
+                // Create content blocks for this section
+                if (!empty($contentBlocks)) {
+                    foreach ($contentBlocks as $blockData) {
+                        $section->contentBlocks()->create($blockData);
+                    }
+                }
+            }
+        }
+
+        return redirect()->route('admin.services.index')->with('success', 'Service created successfully!');
+    }
+
+    /**
+     * Show the form for editing the specified service
+     */
+    public function edit(Service $service)
+    {
+        $categories = ServiceCategory::active()->ordered()->get();
+        
+        // Load service with all tutorial sections and their content blocks
+        $service->load([
+            'category',
+            'tutorialSections' => function ($query) {
+                $query->ordered()->with(['contentBlocks' => function ($q) {
+                    $q->ordered();
+                }]);
+            }
+        ]);
+        
+        return Inertia::render('Admin/Services/Edit', [
+            'service' => $service,
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -97,11 +172,85 @@ class ServiceController extends Controller
             'difficulty' => ['required', 'in:beginner,intermediate,advanced'],
             'order' => ['required', 'integer', 'min:0'],
             'is_active' => ['boolean'],
+            'tutorial_sections' => ['nullable', 'array'],
+            'tutorial_sections.*.id' => ['nullable', 'exists:tutorial_sections,id'],
+            'tutorial_sections.*.title' => ['required', 'string', 'max:255'],
+            'tutorial_sections.*.slug' => ['nullable', 'string', 'max:255'],
+            'tutorial_sections.*.order' => ['required', 'integer', 'min:0'],
+            'tutorial_sections.*.is_active' => ['boolean'],
+            'tutorial_sections.*.content_blocks' => ['nullable', 'array'],
+            'tutorial_sections.*.content_blocks.*.id' => ['nullable', 'exists:tutorial_content_blocks,id'],
+            'tutorial_sections.*.content_blocks.*.type' => ['required', 'in:content,code,tip,warning,info'],
+            'tutorial_sections.*.content_blocks.*.content' => ['required', 'string'],
+            'tutorial_sections.*.content_blocks.*.code_language' => ['nullable', 'string', 'max:50'],
+            'tutorial_sections.*.content_blocks.*.order' => ['required', 'integer', 'min:0'],
+            'deleted_sections' => ['nullable', 'array'],
+            'deleted_sections.*' => ['exists:tutorial_sections,id'],
+            'deleted_blocks' => ['nullable', 'array'],
+            'deleted_blocks.*' => ['exists:tutorial_content_blocks,id'],
         ]);
 
+        // Handle video upload if present
+        if ($request->hasFile('video_file')) {
+            $videoPath = $request->file('video_file')->store('videos', 'public');
+            $validated['video_url'] = asset('storage/' . $videoPath);
+        }
+
+        // Handle video thumbnail upload if present
+        if ($request->hasFile('video_thumbnail_file')) {
+            $thumbnailPath = $request->file('video_thumbnail_file')->store('thumbnails', 'public');
+            $validated['video_thumbnail'] = asset('storage/' . $thumbnailPath);
+        }
+
+        // Update service
         $service->update($validated);
 
-        return redirect()->back()->with('success', 'Service updated successfully!');
+        // Delete removed sections
+        if (!empty($validated['deleted_sections'])) {
+            \App\Models\TutorialSection::whereIn('id', $validated['deleted_sections'])->delete();
+        }
+
+        // Delete removed blocks
+        if (!empty($validated['deleted_blocks'])) {
+            \App\Models\TutorialContentBlock::whereIn('id', $validated['deleted_blocks'])->delete();
+        }
+
+        // Update or create tutorial sections
+        if (!empty($validated['tutorial_sections'])) {
+            foreach ($validated['tutorial_sections'] as $sectionData) {
+                $contentBlocks = $sectionData['content_blocks'] ?? [];
+                $sectionId = $sectionData['id'] ?? null;
+                unset($sectionData['id'], $sectionData['content_blocks']);
+                
+                if ($sectionId) {
+                    // Update existing section
+                    $section = \App\Models\TutorialSection::find($sectionId);
+                    $section->update($sectionData);
+                } else {
+                    // Create new section
+                    $section = $service->tutorialSections()->create($sectionData);
+                }
+                
+                // Update or create content blocks
+                if (!empty($contentBlocks)) {
+                    foreach ($contentBlocks as $blockData) {
+                        $blockId = $blockData['id'] ?? null;
+                        unset($blockData['id']);
+                        
+                        if ($blockId) {
+                            // Update existing block
+                            $block = \App\Models\TutorialContentBlock::find($blockId);
+                            $block->update($blockData);
+                        } else {
+                            // Create new block
+                            $section->contentBlocks()->create($blockData);
+                        }
+                    }
+                }
+            }
+        }
+
+        return redirect()->route('admin.services.index')->with('success', 'Service updated successfully!');
     }
 
     /**
