@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\NewsletterSubscriptionController;
 use App\Http\Controllers\Admin\SupportSubmissionController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/export', [NewsletterSubscriptionController::class, 'export'])->name('export');
             Route::put('/{subscription}', [NewsletterSubscriptionController::class, 'update'])->name('update');
             Route::delete('/{subscription}', [NewsletterSubscriptionController::class, 'destroy'])->name('destroy');
+        });
+
+        // Customers management
+        Route::prefix('customers')->name('customers.')->group(function () {
+            Route::get('/', [CustomerController::class, 'index'])->name('index');
+            Route::get('/export', [CustomerController::class, 'export'])->name('export');
+            Route::get('/{customer}', [CustomerController::class, 'show'])->name('show');
+            Route::put('/{customer}', [CustomerController::class, 'update'])->name('update');
+            Route::put('/{customer}/reset-password', [CustomerController::class, 'resetPassword'])->name('reset-password');
+            Route::delete('/{customer}', [CustomerController::class, 'destroy'])->name('destroy');
         });
     });
 });
