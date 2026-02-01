@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\NewsletterSubscriptionController;
 use App\Http\Controllers\Admin\SupportSubmissionController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{submission}', [SupportSubmissionController::class, 'show'])->name('show');
             Route::put('/{submission}', [SupportSubmissionController::class, 'update'])->name('update');
             Route::delete('/{submission}', [SupportSubmissionController::class, 'destroy'])->name('destroy');
+        });
+
+        // Newsletter subscriptions
+        Route::prefix('newsletter')->name('newsletter.')->group(function () {
+            Route::get('/', [NewsletterSubscriptionController::class, 'index'])->name('index');
+            Route::get('/export', [NewsletterSubscriptionController::class, 'export'])->name('export');
+            Route::put('/{subscription}', [NewsletterSubscriptionController::class, 'update'])->name('update');
+            Route::delete('/{subscription}', [NewsletterSubscriptionController::class, 'destroy'])->name('destroy');
         });
     });
 });
