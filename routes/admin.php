@@ -73,6 +73,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::put('/{service}', [ServiceController::class, 'update'])->name('update');
             Route::put('/{service}/toggle-status', [ServiceController::class, 'toggleStatus'])->name('toggle-status');
             Route::delete('/{service}', [ServiceController::class, 'destroy'])->name('destroy');
+
+            // Content image upload
+            Route::post('/upload-content-image', [ServiceController::class, 'uploadContentImage'])->name('upload-content-image');
+            Route::post('/delete-content-image', [ServiceController::class, 'deleteContentImage'])->name('delete-content-image');
         });
     });
 });

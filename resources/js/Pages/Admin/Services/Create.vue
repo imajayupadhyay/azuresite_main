@@ -103,9 +103,86 @@ const addContentBlock = (sectionIndex, type = 'content') => {
         type: type,
         content: '',
         code_language: type === 'code' ? 'bash' : null,
+        image_path: null,
+        image_alt: '',
+        image_caption: '',
         order: section.content_blocks.length,
         is_active: true,
     });
+};
+
+// Handle image upload for content block
+const uploadingImage = ref({});
+
+const handleBlockImageUpload = async (event, sectionIndex, blockIndex) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const key = `${sectionIndex}-${blockIndex}`;
+    uploadingImage.value[key] = true;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        if (!csrfToken) {
+            throw new Error('CSRF token not found. Please refresh the page.');
+        }
+
+        const response = await fetch('/admin/services/upload-content-image', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Accept': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Server response:', errorText);
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+            form.value.tutorial_sections[sectionIndex].content_blocks[blockIndex].image_path = data.path;
+        } else {
+            alert('Failed to upload image: ' + (data.message || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Image upload failed:', error);
+        alert('Failed to upload image: ' + error.message);
+    } finally {
+        uploadingImage.value[key] = false;
+    }
+};
+
+const removeBlockImage = async (sectionIndex, blockIndex) => {
+    const block = form.value.tutorial_sections[sectionIndex].content_blocks[blockIndex];
+
+    if (block.image_path) {
+        try {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            await fetch('/admin/services/delete-content-image', {
+                method: 'POST',
+                body: JSON.stringify({ path: block.image_path }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                },
+            });
+        } catch (error) {
+            console.error('Failed to delete image:', error);
+        }
+    }
+
+    block.image_path = null;
+    block.image_alt = '';
+    block.image_caption = '';
 };
 
 // Remove content block
@@ -212,6 +289,9 @@ const submit = () => {
             formData.append(`tutorial_sections[${sIndex}][content_blocks][${bIndex}][type]`, block.type);
             formData.append(`tutorial_sections[${sIndex}][content_blocks][${bIndex}][content]`, block.content || '');
             formData.append(`tutorial_sections[${sIndex}][content_blocks][${bIndex}][code_language]`, block.code_language || '');
+            formData.append(`tutorial_sections[${sIndex}][content_blocks][${bIndex}][image_path]`, block.image_path || '');
+            formData.append(`tutorial_sections[${sIndex}][content_blocks][${bIndex}][image_alt]`, block.image_alt || '');
+            formData.append(`tutorial_sections[${sIndex}][content_blocks][${bIndex}][image_caption]`, block.image_caption || '');
             formData.append(`tutorial_sections[${sIndex}][content_blocks][${bIndex}][order]`, block.order);
         });
     });
@@ -239,6 +319,7 @@ const getBlockTypeConfig = (type) => {
         tip: { bg: 'bg-emerald-50', border: 'border-emerald-200', icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z', label: 'Tip' },
         warning: { bg: 'bg-amber-50', border: 'border-amber-200', icon: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z', label: 'Warning' },
         info: { bg: 'bg-blue-50', border: 'border-blue-200', icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z', label: 'Info' },
+        image: { bg: 'bg-purple-50', border: 'border-purple-200', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z', label: 'Image' },
     };
     return configs[type] || configs.content;
 };
@@ -749,6 +830,16 @@ const getBlockTypeConfig = (type) => {
                                                     </svg>
                                                     Info
                                                 </button>
+                                                <button
+                                                    type="button"
+                                                    @click="addContentBlock(sectionIndex, 'image')"
+                                                    class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-lg border border-purple-200 bg-purple-50 text-purple-700 hover:bg-purple-100 transition-all"
+                                                >
+                                                    <svg class="h-3.5 w-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                    </svg>
+                                                    Image
+                                                </button>
                                             </div>
 
                                             <!-- Content Blocks -->
@@ -776,7 +867,8 @@ const getBlockTypeConfig = (type) => {
                                                                     block.type === 'code' ? 'text-emerald-400' :
                                                                     block.type === 'tip' ? 'text-emerald-600' :
                                                                     block.type === 'warning' ? 'text-amber-600' :
-                                                                    block.type === 'info' ? 'text-blue-600' : 'text-gray-600'
+                                                                    block.type === 'info' ? 'text-blue-600' :
+                                                                    block.type === 'image' ? 'text-purple-600' : 'text-gray-600'
                                                                 ]"
                                                                 fill="none"
                                                                 stroke="currentColor"
@@ -868,6 +960,79 @@ const getBlockTypeConfig = (type) => {
                                                                 placeholder="Write your content here..."
                                                                 class="bg-white rounded-lg"
                                                             />
+                                                        </div>
+
+                                                        <!-- Image Block -->
+                                                        <div v-else-if="block.type === 'image'" class="space-y-4">
+                                                            <!-- Image Upload Area -->
+                                                            <div v-if="!block.image_path" class="relative">
+                                                                <input
+                                                                    type="file"
+                                                                    @change="handleBlockImageUpload($event, sectionIndex, blockIndex)"
+                                                                    accept="image/*"
+                                                                    class="hidden"
+                                                                    :id="`image-upload-${sectionIndex}-${blockIndex}`"
+                                                                />
+                                                                <label
+                                                                    :for="`image-upload-${sectionIndex}-${blockIndex}`"
+                                                                    class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-purple-300 rounded-xl cursor-pointer hover:border-purple-400 hover:bg-purple-50/50 transition-all duration-200"
+                                                                >
+                                                                    <div v-if="uploadingImage[`${sectionIndex}-${blockIndex}`]" class="flex flex-col items-center">
+                                                                        <svg class="animate-spin h-10 w-10 text-purple-500 mb-2" fill="none" viewBox="0 0 24 24">
+                                                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                                        </svg>
+                                                                        <span class="text-sm text-purple-500">Uploading...</span>
+                                                                    </div>
+                                                                    <template v-else>
+                                                                        <svg class="h-12 w-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                                        </svg>
+                                                                        <span class="mt-2 text-sm text-purple-600 font-medium">Click to upload image</span>
+                                                                        <span class="mt-1 text-xs text-gray-400">PNG, JPG, GIF, WebP up to 5MB</span>
+                                                                    </template>
+                                                                </label>
+                                                            </div>
+
+                                                            <!-- Image Preview -->
+                                                            <div v-else class="relative group">
+                                                                <img
+                                                                    :src="block.image_path"
+                                                                    :alt="block.image_alt || 'Uploaded image'"
+                                                                    class="w-full max-h-64 object-contain rounded-xl border border-purple-200"
+                                                                />
+                                                                <button
+                                                                    type="button"
+                                                                    @click="removeBlockImage(sectionIndex, blockIndex)"
+                                                                    class="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                                                                >
+                                                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+
+                                                            <!-- Alt Text -->
+                                                            <div class="space-y-1">
+                                                                <label class="block text-sm font-medium text-gray-700">Alt Text</label>
+                                                                <input
+                                                                    v-model="block.image_alt"
+                                                                    type="text"
+                                                                    placeholder="Describe the image for accessibility..."
+                                                                    class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                                                />
+                                                            </div>
+
+                                                            <!-- Caption -->
+                                                            <div class="space-y-1">
+                                                                <label class="block text-sm font-medium text-gray-700">Caption <span class="text-gray-400 text-xs">(optional)</span></label>
+                                                                <input
+                                                                    v-model="block.image_caption"
+                                                                    type="text"
+                                                                    placeholder="Add a caption for the image..."
+                                                                    class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                                                />
+                                                            </div>
                                                         </div>
 
                                                         <!-- Simple Textarea for Tips/Warnings/Info -->

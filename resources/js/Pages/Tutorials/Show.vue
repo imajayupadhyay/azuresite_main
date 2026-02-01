@@ -3,6 +3,18 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import Header from '@/Components/Header.vue';
 import Footer from '@/Components/Footer.vue';
+import { useAzureIcons } from '@/Composables/useAzureIcons';
+
+const { getIcon } = useAzureIcons();
+
+// Get the icon SVG from the identifier
+const serviceIcon = computed(() => {
+    if (props.service.iconIdentifier) {
+        const icon = getIcon(props.service.iconIdentifier);
+        return icon?.svg || null;
+    }
+    return null;
+});
 
 const props = defineProps({
     service: {
@@ -140,7 +152,7 @@ const currentSectionTitle = computed(() => {
                     <!-- Service Icon & Title -->
                     <div class="flex items-start sm:items-center mb-4 sm:mb-6">
                         <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center mr-3 sm:mr-5 flex-shrink-0">
-                            <img v-if="service.iconUrl" :src="service.iconUrl" :alt="service.name" class="w-7 h-7 sm:w-10 sm:h-10" />
+                            <div v-if="serviceIcon" class="w-7 h-7 sm:w-10 sm:h-10" v-html="serviceIcon"></div>
                             <svg v-else class="w-6 h-6 sm:w-8 sm:h-8 text-primary-300" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                             </svg>
@@ -496,6 +508,27 @@ const currentSectionTitle = computed(() => {
                                                 <p class="font-semibold text-red-800 mb-1 text-sm sm:text-base">Warning</p>
                                                 <p class="text-red-700 text-xs sm:text-sm">{{ section.warning }}</p>
                                             </div>
+                                        </div>
+
+                                        <!-- Images (if exist) -->
+                                        <div v-if="section.images?.length" class="mt-4 sm:mt-6 space-y-4">
+                                            <figure
+                                                v-for="(image, index) in section.images"
+                                                :key="index"
+                                                class="rounded-lg sm:rounded-xl overflow-hidden border border-navy-100"
+                                            >
+                                                <img
+                                                    :src="image.path"
+                                                    :alt="image.alt || 'Tutorial image'"
+                                                    class="w-full h-auto"
+                                                />
+                                                <figcaption
+                                                    v-if="image.caption"
+                                                    class="text-xs sm:text-sm text-navy-500 bg-navy-50 px-3 sm:px-4 py-2 text-center"
+                                                >
+                                                    {{ image.caption }}
+                                                </figcaption>
+                                            </figure>
                                         </div>
                                     </section>
                                 </div>

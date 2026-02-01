@@ -90,9 +90,12 @@ class ServiceController extends Controller
             'tutorial_sections.*.order' => ['required', 'integer', 'min:0'],
             'tutorial_sections.*.is_active' => ['boolean'],
             'tutorial_sections.*.content_blocks' => ['nullable', 'array'],
-            'tutorial_sections.*.content_blocks.*.type' => ['required', 'in:content,code,tip,warning,info'],
-            'tutorial_sections.*.content_blocks.*.content' => ['required', 'string'],
+            'tutorial_sections.*.content_blocks.*.type' => ['required', 'in:content,code,tip,warning,info,image'],
+            'tutorial_sections.*.content_blocks.*.content' => ['nullable', 'string'],
             'tutorial_sections.*.content_blocks.*.code_language' => ['nullable', 'string', 'max:50'],
+            'tutorial_sections.*.content_blocks.*.image_path' => ['nullable', 'string', 'max:500'],
+            'tutorial_sections.*.content_blocks.*.image_alt' => ['nullable', 'string', 'max:255'],
+            'tutorial_sections.*.content_blocks.*.image_caption' => ['nullable', 'string', 'max:500'],
             'tutorial_sections.*.content_blocks.*.order' => ['required', 'integer', 'min:0'],
         ]);
 
@@ -180,9 +183,12 @@ class ServiceController extends Controller
             'tutorial_sections.*.is_active' => ['boolean'],
             'tutorial_sections.*.content_blocks' => ['nullable', 'array'],
             'tutorial_sections.*.content_blocks.*.id' => ['nullable', 'exists:tutorial_content_blocks,id'],
-            'tutorial_sections.*.content_blocks.*.type' => ['required', 'in:content,code,tip,warning,info'],
-            'tutorial_sections.*.content_blocks.*.content' => ['required', 'string'],
+            'tutorial_sections.*.content_blocks.*.type' => ['required', 'in:content,code,tip,warning,info,image'],
+            'tutorial_sections.*.content_blocks.*.content' => ['nullable', 'string'],
             'tutorial_sections.*.content_blocks.*.code_language' => ['nullable', 'string', 'max:50'],
+            'tutorial_sections.*.content_blocks.*.image_path' => ['nullable', 'string', 'max:500'],
+            'tutorial_sections.*.content_blocks.*.image_alt' => ['nullable', 'string', 'max:255'],
+            'tutorial_sections.*.content_blocks.*.image_caption' => ['nullable', 'string', 'max:500'],
             'tutorial_sections.*.content_blocks.*.order' => ['required', 'integer', 'min:0'],
             'deleted_sections' => ['nullable', 'array'],
             'deleted_sections.*' => ['exists:tutorial_sections,id'],
@@ -274,5 +280,53 @@ class ServiceController extends Controller
         $service->delete();
 
         return redirect()->route('admin.services.index')->with('success', 'Service deleted successfully!');
+    }
+
+    /**
+     * Upload content block image
+     */
+    public function uploadContentImage(Request $request)
+    {
+        $request->validate([
+            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'], // 5MB max
+        ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+
+            // Store in service-content directory
+            $path = $image->storeAs('service-content', $filename, 'public');
+
+            return response()->json([
+                'success' => true,
+                'path' => '/storage/' . $path,
+                'url' => asset('storage/' . $path),
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'No image uploaded',
+        ], 400);
+    }
+
+    /**
+     * Delete content block image
+     */
+    public function deleteContentImage(Request $request)
+    {
+        $request->validate([
+            'path' => ['required', 'string'],
+        ]);
+
+        $path = str_replace('/storage/', '', $request->path);
+
+        if (\Storage::disk('public')->exists($path)) {
+            \Storage::disk('public')->delete($path);
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'File not found'], 404);
     }
 }

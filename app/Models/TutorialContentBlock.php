@@ -12,6 +12,9 @@ class TutorialContentBlock extends Model
         'type',
         'content',
         'code_language',
+        'image_path',
+        'image_alt',
+        'image_caption',
         'order',
         'is_active',
     ];
