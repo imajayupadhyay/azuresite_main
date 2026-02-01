@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\NewsletterSubscriptionController;
+use App\Http\Controllers\Admin\ServiceCategoryController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SupportSubmissionController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +52,25 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::put('/{customer}', [CustomerController::class, 'update'])->name('update');
             Route::put('/{customer}/reset-password', [CustomerController::class, 'resetPassword'])->name('reset-password');
             Route::delete('/{customer}', [CustomerController::class, 'destroy'])->name('destroy');
+        });
+
+        // Service categories management
+        Route::prefix('services/categories')->name('services.categories.')->group(function () {
+            Route::get('/', [ServiceCategoryController::class, 'index'])->name('index');
+            Route::post('/', [ServiceCategoryController::class, 'store'])->name('store');
+            Route::put('/{category}', [ServiceCategoryController::class, 'update'])->name('update');
+            Route::put('/{category}/toggle-status', [ServiceCategoryController::class, 'toggleStatus'])->name('toggle-status');
+            Route::post('/reorder', [ServiceCategoryController::class, 'reorder'])->name('reorder');
+            Route::delete('/{category}', [ServiceCategoryController::class, 'destroy'])->name('destroy');
+        });
+
+        // Services management
+        Route::prefix('services')->name('services.')->group(function () {
+            Route::get('/', [ServiceController::class, 'index'])->name('index');
+            Route::post('/', [ServiceController::class, 'store'])->name('store');
+            Route::put('/{service}', [ServiceController::class, 'update'])->name('update');
+            Route::put('/{service}/toggle-status', [ServiceController::class, 'toggleStatus'])->name('toggle-status');
+            Route::delete('/{service}', [ServiceController::class, 'destroy'])->name('destroy');
         });
     });
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ServiceCategory;
 use App\Services\TutorialDataService;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -13,7 +14,12 @@ class TutorialController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('Tutorials/Index');
+        // Get active categories from database, ordered
+        $categories = ServiceCategory::active()->ordered()->get();
+
+        return Inertia::render('Tutorials/Index', [
+            'dbCategories' => $categories,
+        ]);
     }
 
     /**
