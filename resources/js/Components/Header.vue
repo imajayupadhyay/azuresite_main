@@ -79,46 +79,13 @@ const isActive = (href) => {
             <div class="max-w-7xl mx-auto px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     <!-- Logo with Cloud Design -->
-                    <a href="/" class="flex items-center space-x-3 group">
-                        <div class="relative w-10 h-10 flex items-center justify-center">
-                            <!-- Cloud Logo SVG -->
-                            <svg class="w-10 h-10 transition-all duration-300 group-hover:scale-110" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <linearGradient id="cloud-gradient" x1="24" y1="10" x2="24" y2="38">
-                                        <stop offset="0%" stop-color="#5ea0ef"/>
-                                        <stop offset="100%" stop-color="#0078d4"/>
-                                    </linearGradient>
-                                </defs>
-                                <!-- Main Cloud Shape -->
-                                <path d="M38.5 28c2.5 0 4.5-2 4.5-4.5 0-2.2-1.6-4-3.7-4.4-.3-4.4-4-7.9-8.5-7.9-3.1 0-5.8 1.6-7.3 4.1-0.7-0.3-1.4-0.4-2.2-0.4-3.2 0-5.8 2.6-5.8 5.8 0 0.5 0.1 1 0.2 1.5C13.2 22.9 11.5 24.9 11.5 27.3c0 2.8 2.3 5.2 5.2 5.2h21.8z" 
-                                      fill="url(#cloud-gradient)" 
-                                      class="group-hover:opacity-90 transition-opacity"/>
-                                <!-- Cloud Highlight -->
-                                <path d="M38.5 28c2.5 0 4.5-2 4.5-4.5 0-2.2-1.6-4-3.7-4.4-.3-4.4-4-7.9-8.5-7.9-3.1 0-5.8 1.6-7.3 4.1" 
-                                      stroke="#50e6ff" 
-                                      stroke-width="1.5" 
-                                      stroke-linecap="round"
-                                      fill="none"
-                                      opacity="0.6"/>
-                                <!-- Small Cloud Detail -->
-                                <circle cx="26" cy="20" r="1.5" fill="#50e6ff" opacity="0.8"/>
-                                <circle cx="32" cy="24" r="1.2" fill="#50e6ff" opacity="0.6"/>
-                            </svg>
-                        </div>
-                        <div class="flex flex-col">
-                            <span 
-                                class="text-xl font-bold transition-colors leading-none"
-                                :class="isTransparent ? 'text-white group-hover:text-primary-300' : 'text-navy-900 group-hover:text-primary-600'"
-                            >
-                                AzureSkill
-                            </span>
-                            <span 
-                                class="text-[10px] font-medium tracking-wider uppercase"
-                                :class="isTransparent ? 'text-primary-200' : 'text-navy-500'"
-                            >
-                                Cloud Learning
-                            </span>
-                        </div>
+                    <a href="/" class="flex items-center group">
+                        <img
+                            src="/Azureskill.png"
+                            alt="AzureSkill"
+                            class="h-10 w-auto transition-all duration-300 group-hover:scale-105"
+                            :class="isTransparent ? 'brightness-0 invert' : ''"
+                        />
                     </a>
 
                     <!-- Desktop Navigation -->
@@ -294,24 +261,12 @@ const isActive = (href) => {
             >
                 <!-- Menu Header -->
                 <div class="flex items-center justify-between p-6 border-b border-gray-200">
-                    <div class="flex items-center space-x-3">
-                        <!-- Cloud Logo -->
-                        <div class="relative w-10 h-10 flex items-center justify-center">
-                            <svg class="w-10 h-10" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <linearGradient id="mobile-cloud-gradient" x1="24" y1="10" x2="24" y2="38">
-                                        <stop offset="0%" stop-color="#5ea0ef"/>
-                                        <stop offset="100%" stop-color="#0078d4"/>
-                                    </linearGradient>
-                                </defs>
-                                <path d="M38.5 28c2.5 0 4.5-2 4.5-4.5 0-2.2-1.6-4-3.7-4.4-.3-4.4-4-7.9-8.5-7.9-3.1 0-5.8 1.6-7.3 4.1-0.7-0.3-1.4-0.4-2.2-0.4-3.2 0-5.8 2.6-5.8 5.8 0 0.5 0.1 1 0.2 1.5C13.2 22.9 11.5 24.9 11.5 27.3c0 2.8 2.3 5.2 5.2 5.2h21.8z" 
-                                      fill="url(#mobile-cloud-gradient)"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <span class="text-xl font-bold text-navy-900">AzureSkill</span>
-                            <p class="text-xs text-navy-600">Cloud Learning</p>
-                        </div>
+                    <div class="flex items-center">
+                        <img
+                            src="/Azureskill.png"
+                            alt="AzureSkill"
+                            class="h-10 w-auto"
+                        />
                     </div>
                     <button
                         @click="isMenuOpen = false"
