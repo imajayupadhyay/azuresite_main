@@ -29,7 +29,7 @@ Route::get('/certifications/{slug}', [CertificationController::class, 'show']);
 Route::get('/live-training', fn () => Inertia::render('LiveTraining/Index'));
 
 // Support
-Route::get('/support', fn () => Inertia::render('Support/Index'));
+Route::get('/support', [SupportController::class, 'index']);
 Route::post('/support', [SupportController::class, 'store'])->name('support.store');
 
 // Newsletter

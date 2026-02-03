@@ -1,8 +1,27 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import { Head, router } from '@inertiajs/vue3';
 import Header from '@/Components/Header.vue';
 import Footer from '@/Components/Footer.vue';
+
+const props = defineProps({
+    hero: {
+        type: Object,
+        default: null
+    },
+    quickLinks: {
+        type: Array,
+        default: () => []
+    },
+    contactInfo: {
+        type: Array,
+        default: () => []
+    },
+    faqs: {
+        type: Array,
+        default: () => []
+    }
+});
 
 const isHeroVisible = ref(false);
 const showSuccessModal = ref(false);
@@ -48,18 +67,47 @@ const closeModal = () => {
     showSuccessModal.value = false;
 };
 
-const quickLinks = [
-    { title: 'Tutorials', description: 'Browse learning resources', icon: 'book', href: '/tutorials' },
-    { title: 'Certifications', description: 'Exam preparation guides', icon: 'badge', href: '/certifications' },
-    { title: 'Live Training', description: 'Join expert sessions', icon: 'video', href: '/live-training' }
-];
+// Fallback data if backend doesn't provide
+const heroData = computed(() => props.hero || {
+    title: 'How can we help?',
+    subtitle: 'Get in touch with our team or explore our resources',
+    data: { response_time: 'We typically respond within 24 hours' }
+});
 
-const faqs = [
-    { q: 'How do I access Azure tutorials?', a: 'Navigate to the Tutorials page from the menu. All tutorials are free with step-by-step instructions.' },
-    { q: 'Do I need an Azure account?', a: 'You can browse tutorials without an account, but need an Azure subscription for hands-on practice.' },
-    { q: 'Are tutorials updated regularly?', a: 'Yes! We continuously update content to reflect the latest Azure features. New tutorials added weekly.' },
-    { q: 'How can I get personalized support?', a: 'Fill out the contact form or email support@azureskill.com. We respond within 24 hours.' }
-];
+const quickLinksData = computed(() => {
+    if (props.quickLinks && props.quickLinks.length > 0) {
+        return props.quickLinks;
+    }
+    // Fallback
+    return [
+        { title: 'Tutorials', description: 'Browse learning resources', icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', link_url: '/tutorials' },
+        { title: 'Certifications', description: 'Exam preparation guides', icon: 'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z', link_url: '/certifications' },
+        { title: 'Live Training', description: 'Join expert sessions', icon: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z', link_url: '/live-training' }
+    ];
+});
+
+const faqsData = computed(() => {
+    if (props.faqs && props.faqs.length > 0) {
+        return props.faqs.map(faq => ({
+            q: faq.title,
+            a: faq.description
+        }));
+    }
+    // Fallback
+    return [
+        { q: 'How do I access Azure tutorials?', a: 'Navigate to the Tutorials page from the menu. All tutorials are free with step-by-step instructions.' },
+        { q: 'Do I need an Azure account?', a: 'You can browse tutorials without an account, but need an Azure subscription for hands-on practice.' },
+        { q: 'Are tutorials updated regularly?', a: 'Yes! We continuously update content to reflect the latest Azure features. New tutorials added weekly.' },
+        { q: 'How can I get personalized support?', a: 'Fill out the contact form or email support@azureskill.com. We respond within 24 hours.' }
+    ];
+});
+
+const getIconType = (link) => {
+    if (link.link_url && link.link_url.includes('tutorial')) return 'book';
+    if (link.link_url && link.link_url.includes('certification')) return 'badge';
+    if (link.link_url && link.link_url.includes('training')) return 'video';
+    return 'book';
+};
 </script>
 
 <template>
@@ -98,15 +146,13 @@ const faqs = [
                         <svg class="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                         </svg>
-                        <span class="text-sm text-primary-100">We typically respond within 24 hours</span>
+                        <span class="text-sm text-primary-100">{{ heroData.data?.response_time || 'We typically respond within 24 hours' }}</span>
                     </div>
 
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
-                        How can we
-                        <span class="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">help</span>?
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4" v-html="heroData.title || 'How can we <span class=\'bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent\'>help</span>?'">
                     </h1>
                     <p class="text-lg text-primary-200/80 max-w-xl mx-auto">
-                        Get in touch with our team or explore our resources
+                        {{ heroData.subtitle || 'Get in touch with our team or explore our resources' }}
                     </p>
                 </div>
             </div>
@@ -118,9 +164,9 @@ const faqs = [
                 <!-- Quick Links -->
                 <div class="grid md:grid-cols-3 gap-6 mb-16">
                     <a
-                        v-for="link in quickLinks"
+                        v-for="link in quickLinksData"
                         :key="link.title"
-                        :href="link.href"
+                        :href="link.link_url || link.href"
                         class="group bg-white rounded-2xl p-6 border border-navy-100 hover:border-primary-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                     >
                         <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -371,7 +417,7 @@ const faqs = [
 
                     <div class="grid md:grid-cols-2 gap-6">
                         <div
-                            v-for="(faq, index) in faqs"
+                            v-for="(faq, index) in faqsData"
                             :key="index"
                             class="group bg-white rounded-2xl p-6 border border-navy-100 hover:border-primary-200 hover:shadow-xl hover:shadow-navy-100/50 transition-all duration-300"
                         >

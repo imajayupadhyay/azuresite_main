@@ -39,7 +39,7 @@
                     :href="route('admin.support.index')"
                     :class="[
                         'flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200',
-                        isActive('admin.support')
+                        isActive('admin.support.index')
                             ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
                             : 'text-gray-700 hover:bg-gray-100'
                     ]"
@@ -47,7 +47,23 @@
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
-                    <span class="font-medium">Support</span>
+                    <span class="font-medium">Support Requests</span>
+                </Link>
+
+                <!-- Support Page Management Link -->
+                <Link
+                    :href="route('admin.support-page.index')"
+                    :class="[
+                        'flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200',
+                        isActive('admin.support-page')
+                            ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                            : 'text-gray-700 hover:bg-gray-100'
+                    ]"
+                >
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                    </svg>
+                    <span class="font-medium">Support Page</span>
                 </Link>
 
                 <!-- Newsletter Link -->

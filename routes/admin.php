@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\NewsletterSubscriptionController;
 use App\Http\Controllers\Admin\ServiceCategoryController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SupportSubmissionController;
+use App\Http\Controllers\Admin\SupportPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/{submission}', [SupportSubmissionController::class, 'show'])->name('show');
             Route::put('/{submission}', [SupportSubmissionController::class, 'update'])->name('update');
             Route::delete('/{submission}', [SupportSubmissionController::class, 'destroy'])->name('destroy');
+        });
+
+        // Support page sections management
+        Route::prefix('support-page')->name('support-page.')->group(function () {
+            Route::get('/', [SupportPageController::class, 'index'])->name('index');
+            Route::post('/', [SupportPageController::class, 'store'])->name('store');
+            Route::put('/{section}', [SupportPageController::class, 'update'])->name('update');
+            Route::delete('/{section}', [SupportPageController::class, 'destroy'])->name('destroy');
+            Route::put('/{section}/toggle-active', [SupportPageController::class, 'toggleActive'])->name('toggle-active');
+            Route::post('/update-order', [SupportPageController::class, 'updateOrder'])->name('update-order');
         });
 
         // Newsletter subscriptions
