@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\CertificationCategoryController;
+use App\Http\Controllers\Admin\CertificationController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\NewsletterSubscriptionController;
 use App\Http\Controllers\Admin\ServiceCategoryController;
@@ -73,6 +74,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::put('/{category}/toggle-status', [CertificationCategoryController::class, 'toggleStatus'])->name('toggle-status');
             Route::post('/reorder', [CertificationCategoryController::class, 'reorder'])->name('reorder');
             Route::delete('/{category}', [CertificationCategoryController::class, 'destroy'])->name('destroy');
+        });
+
+        // Certifications management
+        Route::prefix('certifications')->name('certifications.')->group(function () {
+            Route::get('/', [CertificationController::class, 'index'])->name('index');
+            Route::get('/create', [CertificationController::class, 'create'])->name('create');
+            Route::post('/', [CertificationController::class, 'store'])->name('store');
+            Route::get('/{certification}/edit', [CertificationController::class, 'edit'])->name('edit');
+            Route::put('/{certification}', [CertificationController::class, 'update'])->name('update');
+            Route::put('/{certification}/toggle-status', [CertificationController::class, 'toggleStatus'])->name('toggle-status');
+            Route::delete('/{certification}', [CertificationController::class, 'destroy'])->name('destroy');
         });
 
         // Services management

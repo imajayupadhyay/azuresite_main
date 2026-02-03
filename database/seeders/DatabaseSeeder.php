@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ServiceCategorySeeder::class,
             ServiceSeeder::class,
             CertificationCategorySeeder::class,
+            CertificationSeeder::class,
         ]);
     }
 }
