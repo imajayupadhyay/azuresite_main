@@ -1,13 +1,13 @@
 <template>
-    <div class="min-h-screen bg-gray-50">
+    <div class="min-h-screen bg-gray-50 dark:bg-navy-950">
         <Header />
         
         <main class="pt-24 pb-16 px-6">
             <div class="max-w-5xl mx-auto">
                 <!-- Page Header -->
                 <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-gray-900">My Profile</h1>
-                    <p class="text-gray-600 mt-2">Manage your account information and preferences</p>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">My Profile</h1>
+                    <p class="text-gray-600 dark:text-navy-400 mt-2">Manage your account information and preferences</p>
                 </div>
 
                 <!-- Success Message -->
@@ -38,38 +38,38 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <!-- Sidebar -->
                     <div class="lg:col-span-1">
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sticky top-24">
+                        <div class="bg-white dark:bg-navy-800 rounded-2xl shadow-sm border border-gray-200 dark:border-navy-700 p-6 sticky top-24">
                             <!-- Avatar Section -->
                             <div class="text-center mb-6">
                                 <div class="relative inline-block">
                                     <div class="h-24 w-24 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white font-bold text-3xl shadow-lg mx-auto">
                                         {{ customer.initials }}
                                     </div>
-                                    <button class="absolute bottom-0 right-0 h-8 w-8 bg-white rounded-full shadow-lg border-2 border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                    <button class="absolute bottom-0 right-0 h-8 w-8 bg-white dark:bg-navy-700 rounded-full shadow-lg border-2 border-gray-200 dark:border-navy-600 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-navy-600 transition-colors">
                                         <svg class="h-4 w-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
                                     </button>
                                 </div>
-                                <h2 class="mt-4 text-xl font-bold text-gray-900">{{ customer.name }}</h2>
-                                <p class="text-sm text-gray-500">{{ customer.email }}</p>
+                                <h2 class="mt-4 text-xl font-bold text-gray-900 dark:text-white">{{ customer.name }}</h2>
+                                <p class="text-sm text-gray-500 dark:text-navy-400">{{ customer.email }}</p>
                             </div>
 
                             <!-- Quick Stats -->
-                            <div class="space-y-3 pt-4 border-t border-gray-200">
+                            <div class="space-y-3 pt-4 border-t border-gray-200 dark:border-navy-700">
                                 <div class="flex items-center text-sm">
                                     <svg class="h-5 w-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                     </svg>
-                                    <span class="text-gray-600">Joined {{ formatDate(customer.created_at) }}</span>
+                                    <span class="text-gray-600 dark:text-navy-400">Joined {{ formatDate(customer.created_at) }}</span>
                                 </div>
                                 <div v-if="customer.city || customer.country" class="flex items-center text-sm">
                                     <svg class="h-5 w-5 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
-                                    <span class="text-gray-600">{{ [customer.city, customer.country].filter(Boolean).join(', ') || 'Not specified' }}</span>
+                                    <span class="text-gray-600 dark:text-navy-400">{{ [customer.city, customer.country].filter(Boolean).join(', ') || 'Not specified' }}</span>
                                 </div>
                             </div>
                         </div>
@@ -78,9 +78,9 @@
                     <!-- Main Content -->
                     <div class="lg:col-span-2 space-y-6">
                         <!-- Personal Information -->
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                        <div class="bg-white dark:bg-navy-800 rounded-2xl shadow-sm border border-gray-200 dark:border-navy-700 p-6">
                             <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-lg font-bold text-gray-900">Personal Information</h3>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Personal Information</h3>
                                 <button 
                                     v-if="!editingPersonal"
                                     @click="editingPersonal = true"
@@ -97,56 +97,56 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <!-- Name -->
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">Full Name</label>
                                         <input 
                                             v-model="personalForm.name"
                                             type="text" 
                                             required
-                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                         />
                                     </div>
 
                                     <!-- Email -->
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">Email Address</label>
                                         <input 
                                             v-model="personalForm.email"
                                             type="email" 
                                             required
-                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                         />
                                     </div>
 
                                     <!-- Phone -->
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">Phone Number</label>
                                         <input 
                                             v-model="personalForm.phone"
                                             type="tel" 
                                             placeholder="+1234567890"
-                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                         />
                                     </div>
 
                                     <!-- Age -->
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Age</label>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">Age</label>
                                         <input 
                                             v-model.number="personalForm.age"
                                             type="number" 
                                             min="1"
                                             max="120"
                                             placeholder="Enter your age"
-                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                         />
                                     </div>
 
                                     <!-- Gender -->
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">Gender</label>
                                         <select 
                                             v-model="personalForm.gender"
-                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                         >
                                             <option value="">Select gender</option>
                                             <option value="male">Male</option>
@@ -158,35 +158,35 @@
 
                                     <!-- City -->
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">City</label>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">City</label>
                                         <input 
                                             v-model="personalForm.city"
                                             type="text" 
                                             placeholder="Your city"
-                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                         />
                                     </div>
 
                                     <!-- Country -->
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Country</label>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">Country</label>
                                         <input 
                                             v-model="personalForm.country"
                                             type="text" 
                                             placeholder="Your country"
-                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                         />
                                     </div>
                                 </div>
 
                                 <!-- Bio -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Bio</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">Bio</label>
                                     <textarea 
                                         v-model="personalForm.bio"
                                         rows="3"
                                         placeholder="Tell us about yourself..."
-                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                                        class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
                                     ></textarea>
                                 </div>
 
@@ -195,7 +195,7 @@
                                     <button 
                                         type="button"
                                         @click="cancelPersonalEdit"
-                                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+                                        class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-navy-300 bg-gray-100 dark:bg-navy-700 hover:bg-gray-200 dark:hover:bg-navy-600 rounded-lg transition"
                                     >
                                         Cancel
                                     </button>
@@ -212,40 +212,40 @@
                             <!-- View Mode -->
                             <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <p class="text-sm text-gray-500 mb-1">Full Name</p>
-                                    <p class="font-medium text-gray-900">{{ customer.name }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-navy-400 mb-1">Full Name</p>
+                                    <p class="font-medium text-gray-900 dark:text-white">{{ customer.name }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500 mb-1">Email</p>
-                                    <p class="font-medium text-gray-900">{{ customer.email }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-navy-400 mb-1">Email</p>
+                                    <p class="font-medium text-gray-900 dark:text-white">{{ customer.email }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500 mb-1">Phone</p>
-                                    <p class="font-medium text-gray-900">{{ customer.phone || 'Not provided' }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-navy-400 mb-1">Phone</p>
+                                    <p class="font-medium text-gray-900 dark:text-white">{{ customer.phone || 'Not provided' }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500 mb-1">Age</p>
-                                    <p class="font-medium text-gray-900">{{ customer.age || 'Not provided' }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-navy-400 mb-1">Age</p>
+                                    <p class="font-medium text-gray-900 dark:text-white">{{ customer.age || 'Not provided' }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500 mb-1">Gender</p>
-                                    <p class="font-medium text-gray-900">{{ formatGender(customer.gender) }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-navy-400 mb-1">Gender</p>
+                                    <p class="font-medium text-gray-900 dark:text-white">{{ formatGender(customer.gender) }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500 mb-1">Location</p>
-                                    <p class="font-medium text-gray-900">{{ [customer.city, customer.country].filter(Boolean).join(', ') || 'Not provided' }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-navy-400 mb-1">Location</p>
+                                    <p class="font-medium text-gray-900 dark:text-white">{{ [customer.city, customer.country].filter(Boolean).join(', ') || 'Not provided' }}</p>
                                 </div>
                                 <div v-if="customer.bio" class="md:col-span-2">
-                                    <p class="text-sm text-gray-500 mb-1">Bio</p>
-                                    <p class="font-medium text-gray-900">{{ customer.bio }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-navy-400 mb-1">Bio</p>
+                                    <p class="font-medium text-gray-900 dark:text-white">{{ customer.bio }}</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Professional Information -->
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                        <div class="bg-white dark:bg-navy-800 rounded-2xl shadow-sm border border-gray-200 dark:border-navy-700 p-6">
                             <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-lg font-bold text-gray-900">Professional Information</h3>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Professional Information</h3>
                                 <button 
                                     v-if="!editingProfessional"
                                     @click="editingProfessional = true"
@@ -262,34 +262,34 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <!-- Qualification -->
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Qualification</label>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">Qualification</label>
                                         <input 
                                             v-model="professionalForm.qualification"
                                             type="text" 
                                             placeholder="e.g., Bachelor's in Computer Science"
-                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                         />
                                     </div>
 
                                     <!-- Occupation -->
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Occupation</label>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">Occupation</label>
                                         <input 
                                             v-model="professionalForm.occupation"
                                             type="text" 
                                             placeholder="e.g., Cloud Engineer"
-                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                         />
                                     </div>
 
                                     <!-- Company -->
                                     <div class="md:col-span-2">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Company</label>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">Company</label>
                                         <input 
                                             v-model="professionalForm.company"
                                             type="text" 
                                             placeholder="Your current company"
-                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                            class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                         />
                                     </div>
                                 </div>
@@ -299,7 +299,7 @@
                                     <button 
                                         type="button"
                                         @click="cancelProfessionalEdit"
-                                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+                                        class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-navy-300 bg-gray-100 dark:bg-navy-700 hover:bg-gray-200 dark:hover:bg-navy-600 rounded-lg transition"
                                     >
                                         Cancel
                                     </button>
@@ -316,50 +316,50 @@
                             <!-- View Mode -->
                             <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <p class="text-sm text-gray-500 mb-1">Qualification</p>
-                                    <p class="font-medium text-gray-900">{{ customer.qualification || 'Not provided' }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-navy-400 mb-1">Qualification</p>
+                                    <p class="font-medium text-gray-900 dark:text-white">{{ customer.qualification || 'Not provided' }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500 mb-1">Occupation</p>
-                                    <p class="font-medium text-gray-900">{{ customer.occupation || 'Not provided' }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-navy-400 mb-1">Occupation</p>
+                                    <p class="font-medium text-gray-900 dark:text-white">{{ customer.occupation || 'Not provided' }}</p>
                                 </div>
                                 <div class="md:col-span-2">
-                                    <p class="text-sm text-gray-500 mb-1">Company</p>
-                                    <p class="font-medium text-gray-900">{{ customer.company || 'Not provided' }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-navy-400 mb-1">Company</p>
+                                    <p class="font-medium text-gray-900 dark:text-white">{{ customer.company || 'Not provided' }}</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Change Password -->
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                            <h3 class="text-lg font-bold text-gray-900 mb-6">Change Password</h3>
+                        <div class="bg-white dark:bg-navy-800 rounded-2xl shadow-sm border border-gray-200 dark:border-navy-700 p-6">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6">Change Password</h3>
                             
                             <form @submit.prevent="updatePassword" class="space-y-4 max-w-md">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">Current Password</label>
                                     <input 
                                         v-model="passwordForm.current_password"
                                         type="password" 
                                         required
-                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                        class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                     />
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">New Password</label>
                                     <input 
                                         v-model="passwordForm.password"
                                         type="password" 
                                         required
-                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                        class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                     />
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-navy-300 mb-2">Confirm New Password</label>
                                     <input 
                                         v-model="passwordForm.password_confirmation"
                                         type="password" 
                                         required
-                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                        class="w-full px-4 py-2.5 border border-gray-300 dark:border-navy-600 rounded-lg bg-white dark:bg-navy-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                     />
                                 </div>
                                 <button 

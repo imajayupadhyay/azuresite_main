@@ -104,7 +104,7 @@ const currentSectionTitle = computed(() => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-navy-50">
+    <div class="min-h-screen bg-navy-50 dark:bg-navy-950">
         <Head>
             <title>{{ service.metaTitle || `${service.name} - Azure Tutorial | AzureSkill` }}</title>
             <meta name="description" :content="service.metaDescription || service.description" />
@@ -206,7 +206,7 @@ const currentSectionTitle = computed(() => {
             <div class="max-w-4xl mx-auto">
                 <div
                     @click="showVideoModal = true"
-                    class="group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer shadow-2xl shadow-navy-900/20 border border-navy-200"
+                    class="group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer shadow-2xl shadow-navy-900/20 border border-navy-200 dark:border-navy-700"
                 >
                     <!-- Thumbnail -->
                     <div class="aspect-video bg-gradient-to-br from-navy-800 to-navy-900 relative">
@@ -297,15 +297,15 @@ const currentSectionTitle = computed(() => {
                         leave-from-class="translate-y-0"
                         leave-to-class="translate-y-full"
                     >
-                        <div v-if="showMobileToc" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[70vh] overflow-hidden">
+                        <div v-if="showMobileToc" class="absolute bottom-0 left-0 right-0 bg-white dark:bg-navy-800 rounded-t-3xl max-h-[70vh] overflow-hidden">
                             <!-- Handle -->
                             <div class="flex justify-center py-3">
-                                <div class="w-10 h-1 bg-navy-200 rounded-full"></div>
+                                <div class="w-10 h-1 bg-navy-200 dark:bg-navy-600 rounded-full"></div>
                             </div>
 
                             <!-- Header -->
-                            <div class="px-6 pb-3 border-b border-navy-100">
-                                <h3 class="font-bold text-navy-900 flex items-center">
+                            <div class="px-6 pb-3 border-b border-navy-100 dark:border-navy-700">
+                                <h3 class="font-bold text-navy-900 dark:text-white flex items-center">
                                     <svg class="w-5 h-5 text-primary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
                                     </svg>
@@ -322,10 +322,10 @@ const currentSectionTitle = computed(() => {
                                         @click="scrollToSection(section.id)"
                                         class="w-full text-left px-4 py-3 rounded-xl text-sm transition-all duration-200 flex items-center"
                                         :class="activeSection === section.id
-                                            ? 'bg-primary-50 text-primary-700 font-medium'
-                                            : 'text-navy-600 hover:bg-navy-50'"
+                                            ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 font-medium'
+                                            : 'text-navy-600 dark:text-navy-300 hover:bg-navy-50 dark:hover:bg-navy-700'"
                                     >
-                                        <span class="w-6 h-6 rounded-lg bg-primary-100 text-primary-600 flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">
+                                        <span class="w-6 h-6 rounded-lg bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-300 flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">
                                             {{ service.sections.indexOf(section) + 1 }}
                                         </span>
                                         {{ section.title }}
@@ -334,12 +334,12 @@ const currentSectionTitle = computed(() => {
                             </nav>
 
                             <!-- Share Buttons -->
-                            <div class="p-4 border-t border-navy-100">
-                                <p class="text-xs text-navy-500 mb-3">Share this tutorial</p>
+                            <div class="p-4 border-t border-navy-100 dark:border-navy-700">
+                                <p class="text-xs text-navy-500 dark:text-navy-400 mb-3">Share this tutorial</p>
                                 <div class="flex gap-2">
                                     <button
                                         @click="shareOnTwitter"
-                                        class="flex-1 p-3 rounded-xl bg-navy-50 hover:bg-[#1DA1F2] hover:text-white text-navy-600 transition-all duration-300"
+                                        class="flex-1 p-3 rounded-xl bg-navy-50 dark:bg-navy-700 hover:bg-[#1DA1F2] hover:text-white text-navy-600 dark:text-navy-300 transition-all duration-300"
                                     >
                                         <svg class="w-5 h-5 mx-auto" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -347,7 +347,7 @@ const currentSectionTitle = computed(() => {
                                     </button>
                                     <button
                                         @click="shareOnLinkedIn"
-                                        class="flex-1 p-3 rounded-xl bg-navy-50 hover:bg-[#0A66C2] hover:text-white text-navy-600 transition-all duration-300"
+                                        class="flex-1 p-3 rounded-xl bg-navy-50 dark:bg-navy-700 hover:bg-[#0A66C2] hover:text-white text-navy-600 dark:text-navy-300 transition-all duration-300"
                                     >
                                         <svg class="w-5 h-5 mx-auto" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -355,7 +355,7 @@ const currentSectionTitle = computed(() => {
                                     </button>
                                     <button
                                         @click="copyLink"
-                                        class="flex-1 p-3 rounded-xl bg-navy-50 hover:bg-primary-500 hover:text-white text-navy-600 transition-all duration-300"
+                                        class="flex-1 p-3 rounded-xl bg-navy-50 dark:bg-navy-700 hover:bg-primary-500 hover:text-white text-navy-600 dark:text-navy-300 transition-all duration-300"
                                     >
                                         <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
@@ -394,8 +394,8 @@ const currentSectionTitle = computed(() => {
                             :class="{ 'animate-fade-in': isScrolled }"
                         >
                             <!-- TOC Card -->
-                            <div class="bg-white rounded-2xl p-6 border border-navy-100 shadow-sm">
-                                <h3 class="font-bold text-navy-900 mb-4 flex items-center">
+                            <div class="bg-white dark:bg-navy-800 rounded-2xl p-6 border border-navy-100 dark:border-navy-700 shadow-sm">
+                                <h3 class="font-bold text-navy-900 dark:text-white mb-4 flex items-center">
                                     <svg class="w-5 h-5 text-primary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
                                     </svg>
@@ -408,8 +408,8 @@ const currentSectionTitle = computed(() => {
                                         @click="scrollToSection(section.id)"
                                         class="w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-200"
                                         :class="activeSection === section.id
-                                            ? 'bg-primary-50 text-primary-700 font-medium border-l-2 border-primary-500'
-                                            : 'text-navy-600 hover:bg-navy-50 hover:text-navy-900'"
+                                            ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 font-medium border-l-2 border-primary-500'
+                                            : 'text-navy-600 dark:text-navy-300 hover:bg-navy-50 dark:hover:bg-navy-700 hover:text-navy-900 dark:hover:text-white'"
                                     >
                                         {{ section.title }}
                                     </button>
@@ -417,8 +417,8 @@ const currentSectionTitle = computed(() => {
                             </div>
 
                             <!-- Share Card -->
-                            <div class="bg-white rounded-2xl p-6 border border-navy-100 shadow-sm">
-                                <h3 class="font-bold text-navy-900 mb-4 flex items-center">
+                            <div class="bg-white dark:bg-navy-800 rounded-2xl p-6 border border-navy-100 dark:border-navy-700 shadow-sm">
+                                <h3 class="font-bold text-navy-900 dark:text-white mb-4 flex items-center">
                                     <svg class="w-5 h-5 text-primary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
                                     </svg>
@@ -427,7 +427,7 @@ const currentSectionTitle = computed(() => {
                                 <div class="flex gap-2">
                                     <button
                                         @click="shareOnTwitter"
-                                        class="flex-1 p-3 rounded-xl bg-navy-50 hover:bg-[#1DA1F2] hover:text-white text-navy-600 transition-all duration-300 group"
+                                        class="flex-1 p-3 rounded-xl bg-navy-50 dark:bg-navy-700 hover:bg-[#1DA1F2] hover:text-white text-navy-600 dark:text-navy-300 transition-all duration-300 group"
                                     >
                                         <svg class="w-5 h-5 mx-auto" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -435,7 +435,7 @@ const currentSectionTitle = computed(() => {
                                     </button>
                                     <button
                                         @click="shareOnLinkedIn"
-                                        class="flex-1 p-3 rounded-xl bg-navy-50 hover:bg-[#0A66C2] hover:text-white text-navy-600 transition-all duration-300"
+                                        class="flex-1 p-3 rounded-xl bg-navy-50 dark:bg-navy-700 hover:bg-[#0A66C2] hover:text-white text-navy-600 dark:text-navy-300 transition-all duration-300"
                                     >
                                         <svg class="w-5 h-5 mx-auto" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -443,7 +443,7 @@ const currentSectionTitle = computed(() => {
                                     </button>
                                     <button
                                         @click="copyLink"
-                                        class="flex-1 p-3 rounded-xl bg-navy-50 hover:bg-primary-500 hover:text-white text-navy-600 transition-all duration-300"
+                                        class="flex-1 p-3 rounded-xl bg-navy-50 dark:bg-navy-700 hover:bg-primary-500 hover:text-white text-navy-600 dark:text-navy-300 transition-all duration-300"
                                     >
                                         <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
@@ -468,7 +468,7 @@ const currentSectionTitle = computed(() => {
 
                     <!-- Content Area -->
                     <main class="lg:col-span-3">
-                        <article class="bg-white rounded-2xl sm:rounded-3xl border border-navy-100 shadow-sm overflow-hidden">
+                        <article class="bg-white dark:bg-navy-800 rounded-2xl sm:rounded-3xl border border-navy-100 dark:border-navy-700 shadow-sm overflow-hidden">
                             <div class="p-5 sm:p-8 lg:p-12">
                                 <!-- Content Sections -->
                                 <div class="prose prose-sm sm:prose-base lg:prose-lg max-w-none">
@@ -478,14 +478,14 @@ const currentSectionTitle = computed(() => {
                                         :id="section.id"
                                         class="mb-8 sm:mb-12 scroll-mt-24 sm:scroll-mt-28"
                                     >
-                                        <h2 class="text-lg sm:text-xl lg:text-2xl font-bold text-navy-900 mb-3 sm:mb-4 flex items-start sm:items-center">
-                                            <span class="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-primary-100 text-primary-600 flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 flex-shrink-0 mt-0.5 sm:mt-0">
+                                        <h2 class="text-lg sm:text-xl lg:text-2xl font-bold text-navy-900 dark:text-white mb-3 sm:mb-4 flex items-start sm:items-center">
+                                            <span class="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-300 flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 flex-shrink-0 mt-0.5 sm:mt-0">
                                                 {{ service.sections.indexOf(section) + 1 }}
                                             </span>
                                             <span>{{ section.title }}</span>
                                         </h2>
 
-                                        <div class="text-navy-600 leading-relaxed space-y-3 sm:space-y-4 text-sm sm:text-base" v-html="section.content"></div>
+                                        <div class="text-navy-600 dark:text-navy-300 leading-relaxed space-y-3 sm:space-y-4 text-sm sm:text-base" v-html="section.content"></div>
 
                                         <!-- Code Block (if exists) -->
                                         <div v-if="section.code" class="mt-4 sm:mt-6 rounded-lg sm:rounded-xl overflow-hidden -mx-5 sm:mx-0">
@@ -497,24 +497,24 @@ const currentSectionTitle = computed(() => {
                                         </div>
 
                                         <!-- Tip Box (if exists) -->
-                                        <div v-if="section.tip" class="mt-4 sm:mt-6 p-3 sm:p-4 bg-amber-50 border border-amber-200 rounded-lg sm:rounded-xl flex">
+                                        <div v-if="section.tip" class="mt-4 sm:mt-6 p-3 sm:p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg sm:rounded-xl flex">
                                             <svg class="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 flex-shrink-0 mr-2 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                                             </svg>
                                             <div>
-                                                <p class="font-semibold text-amber-800 mb-1 text-sm sm:text-base">Pro Tip</p>
-                                                <p class="text-amber-700 text-xs sm:text-sm">{{ section.tip }}</p>
+                                                <p class="font-semibold text-amber-800 dark:text-amber-300 mb-1 text-sm sm:text-base">Pro Tip</p>
+                                                <p class="text-amber-700 dark:text-amber-400 text-xs sm:text-sm">{{ section.tip }}</p>
                                             </div>
                                         </div>
 
                                         <!-- Warning Box (if exists) -->
-                                        <div v-if="section.warning" class="mt-4 sm:mt-6 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg sm:rounded-xl flex">
+                                        <div v-if="section.warning" class="mt-4 sm:mt-6 p-3 sm:p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg sm:rounded-xl flex">
                                             <svg class="w-5 h-5 sm:w-6 sm:h-6 text-red-500 flex-shrink-0 mr-2 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                                             </svg>
                                             <div>
-                                                <p class="font-semibold text-red-800 mb-1 text-sm sm:text-base">Warning</p>
-                                                <p class="text-red-700 text-xs sm:text-sm">{{ section.warning }}</p>
+                                                <p class="font-semibold text-red-800 dark:text-red-300 mb-1 text-sm sm:text-base">Warning</p>
+                                                <p class="text-red-700 dark:text-red-400 text-xs sm:text-sm">{{ section.warning }}</p>
                                             </div>
                                         </div>
 
@@ -523,7 +523,7 @@ const currentSectionTitle = computed(() => {
                                             <figure
                                                 v-for="(image, index) in section.images"
                                                 :key="index"
-                                                class="rounded-lg sm:rounded-xl overflow-hidden border border-navy-100"
+                                                class="rounded-lg sm:rounded-xl overflow-hidden border border-navy-100 dark:border-navy-700"
                                             >
                                                 <img
                                                     :src="image.path"
@@ -532,7 +532,7 @@ const currentSectionTitle = computed(() => {
                                                 />
                                                 <figcaption
                                                     v-if="image.caption"
-                                                    class="text-xs sm:text-sm text-navy-500 bg-navy-50 px-3 sm:px-4 py-2 text-center"
+                                                    class="text-xs sm:text-sm text-navy-500 dark:text-navy-400 bg-navy-50 dark:bg-navy-800 px-3 sm:px-4 py-2 text-center"
                                                 >
                                                     {{ image.caption }}
                                                 </figcaption>
@@ -581,23 +581,23 @@ const currentSectionTitle = computed(() => {
 
                         <!-- Related Services -->
                         <div v-if="service.relatedServices?.length" class="mt-8 sm:mt-12">
-                            <h3 class="text-lg sm:text-xl font-bold text-navy-900 mb-4 sm:mb-6">Related Tutorials</h3>
+                            <h3 class="text-lg sm:text-xl font-bold text-navy-900 dark:text-white mb-4 sm:mb-6">Related Tutorials</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                                 <a
                                     v-for="related in service.relatedServices"
                                     :key="related.slug"
                                     :href="`/tutorials/${related.slug}`"
-                                    class="group bg-white rounded-xl p-4 sm:p-5 border border-navy-100 hover:border-primary-200 hover:shadow-lg transition-all duration-300"
+                                    class="group bg-white dark:bg-navy-800 rounded-xl p-4 sm:p-5 border border-navy-100 dark:border-navy-700 hover:border-primary-200 dark:hover:border-primary-800 hover:shadow-lg transition-all duration-300"
                                 >
                                     <div class="flex items-center mb-2 sm:mb-3">
-                                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary-50 flex items-center justify-center mr-2 sm:mr-3 group-hover:bg-primary-100 transition-colors">
+                                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center mr-2 sm:mr-3 group-hover:bg-primary-100 dark:group-hover:bg-primary-900/50 transition-colors">
                                             <svg class="w-4 h-4 sm:w-5 sm:h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                             </svg>
                                         </div>
-                                        <h4 class="font-semibold text-sm sm:text-base text-navy-900 group-hover:text-primary-600 transition-colors">{{ related.name }}</h4>
+                                        <h4 class="font-semibold text-sm sm:text-base text-navy-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ related.name }}</h4>
                                     </div>
-                                    <p class="text-xs sm:text-sm text-navy-500">{{ related.tutorials }} tutorials</p>
+                                    <p class="text-xs sm:text-sm text-navy-500 dark:text-navy-400">{{ related.tutorials }} tutorials</p>
                                 </a>
                             </div>
                         </div>
@@ -673,15 +673,15 @@ const currentSectionTitle = computed(() => {
 @reference "../../../css/app.css";
 
 .prose h2 {
-    @apply text-navy-900;
+    @apply text-navy-900 dark:text-white;
 }
 
 .prose p {
-    @apply text-navy-600;
+    @apply text-navy-600 dark:text-navy-300;
 }
 
 .prose ul {
-    @apply text-navy-600 space-y-2;
+    @apply text-navy-600 dark:text-navy-300 space-y-2;
 }
 
 .prose li {
@@ -694,11 +694,11 @@ const currentSectionTitle = computed(() => {
 }
 
 .prose code {
-    @apply bg-navy-100 px-2 py-0.5 rounded text-primary-700 text-sm font-mono;
+    @apply bg-navy-100 dark:bg-navy-700 px-2 py-0.5 rounded text-primary-700 dark:text-primary-300 text-sm font-mono;
 }
 
 .prose a {
-    @apply text-primary-600 hover:text-primary-700 underline;
+    @apply text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 underline;
 }
 
 @keyframes fade-in {
