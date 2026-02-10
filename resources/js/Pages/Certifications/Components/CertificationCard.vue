@@ -28,14 +28,14 @@ const getDifficultyColor = (difficulty) => {
     return colors[difficulty] || 'bg-gray-100 text-gray-700';
 };
 
-const getSlug = (code) => {
-    return code.toLowerCase();
+const getSlug = () => {
+    return props.certification.slug || props.certification.code.toLowerCase();
 };
 </script>
 
 <template>
     <a
-        :href="`/certifications/${getSlug(certification.code)}`"
+        :href="`/certifications/${getSlug()}`"
         class="group relative bg-white/70 backdrop-blur-xl rounded-2xl border-2 border-primary-200 hover:border-primary-400 p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 block"
         :style="{ transitionDelay: `${index * 50}ms` }"
     >

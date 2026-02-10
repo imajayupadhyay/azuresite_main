@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\CertificationCategoryController;
+use App\Http\Controllers\Admin\CertificationController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\NewsletterSubscriptionController;
 use App\Http\Controllers\Admin\ServiceCategoryController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SupportSubmissionController;
+use App\Http\Controllers\Admin\SupportPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +39,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::delete('/{submission}', [SupportSubmissionController::class, 'destroy'])->name('destroy');
         });
 
+        // Support page sections management
+        Route::prefix('support-page')->name('support-page.')->group(function () {
+            Route::get('/', [SupportPageController::class, 'index'])->name('index');
+            Route::post('/', [SupportPageController::class, 'store'])->name('store');
+            Route::put('/{section}', [SupportPageController::class, 'update'])->name('update');
+            Route::delete('/{section}', [SupportPageController::class, 'destroy'])->name('destroy');
+            Route::put('/{section}/toggle-active', [SupportPageController::class, 'toggleActive'])->name('toggle-active');
+            Route::post('/update-order', [SupportPageController::class, 'updateOrder'])->name('update-order');
+        });
+
         // Newsletter subscriptions
         Route::prefix('newsletter')->name('newsletter.')->group(function () {
             Route::get('/', [NewsletterSubscriptionController::class, 'index'])->name('index');
@@ -62,6 +75,27 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::put('/{category}/toggle-status', [ServiceCategoryController::class, 'toggleStatus'])->name('toggle-status');
             Route::post('/reorder', [ServiceCategoryController::class, 'reorder'])->name('reorder');
             Route::delete('/{category}', [ServiceCategoryController::class, 'destroy'])->name('destroy');
+        });
+
+        // Certification categories management
+        Route::prefix('certifications/categories')->name('certifications.categories.')->group(function () {
+            Route::get('/', [CertificationCategoryController::class, 'index'])->name('index');
+            Route::post('/', [CertificationCategoryController::class, 'store'])->name('store');
+            Route::put('/{category}', [CertificationCategoryController::class, 'update'])->name('update');
+            Route::put('/{category}/toggle-status', [CertificationCategoryController::class, 'toggleStatus'])->name('toggle-status');
+            Route::post('/reorder', [CertificationCategoryController::class, 'reorder'])->name('reorder');
+            Route::delete('/{category}', [CertificationCategoryController::class, 'destroy'])->name('destroy');
+        });
+
+        // Certifications management
+        Route::prefix('certifications')->name('certifications.')->group(function () {
+            Route::get('/', [CertificationController::class, 'index'])->name('index');
+            Route::get('/create', [CertificationController::class, 'create'])->name('create');
+            Route::post('/', [CertificationController::class, 'store'])->name('store');
+            Route::get('/{certification}/edit', [CertificationController::class, 'edit'])->name('edit');
+            Route::put('/{certification}', [CertificationController::class, 'update'])->name('update');
+            Route::put('/{certification}/toggle-status', [CertificationController::class, 'toggleStatus'])->name('toggle-status');
+            Route::delete('/{certification}', [CertificationController::class, 'destroy'])->name('destroy');
         });
 
         // Services management
