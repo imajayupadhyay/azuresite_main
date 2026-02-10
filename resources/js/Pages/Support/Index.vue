@@ -111,7 +111,7 @@ const getIconType = (link) => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-navy-50">
+    <div class="min-h-screen bg-navy-50 dark:bg-navy-950">
         <Head>
             <title>Support - Get Help | AzureSkill</title>
             <meta name="description" content="Get help with Azure tutorials, certifications, and technical issues. Contact our support team." />
@@ -167,7 +167,7 @@ const getIconType = (link) => {
                         v-for="link in quickLinksData"
                         :key="link.title"
                         :href="link.link_url || link.href"
-                        class="group bg-white rounded-2xl p-6 border border-navy-100 hover:border-primary-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                        class="group bg-white dark:bg-navy-800 rounded-2xl p-6 border border-navy-100 dark:border-navy-700 hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                     >
                         <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                             <svg v-if="link.icon === 'book'" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -180,8 +180,8 @@ const getIconType = (link) => {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                             </svg>
                         </div>
-                        <h3 class="text-lg font-bold text-navy-900 mb-1 group-hover:text-primary-600 transition-colors">{{ link.title }}</h3>
-                        <p class="text-sm text-navy-500">{{ link.description }}</p>
+                        <h3 class="text-lg font-bold text-navy-900 dark:text-white mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ link.title }}</h3>
+                        <p class="text-sm text-navy-500 dark:text-navy-400">{{ link.description }}</p>
                     </a>
                 </div>
 
@@ -192,17 +192,17 @@ const getIconType = (link) => {
                     <div class="absolute -bottom-10 -right-10 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl"></div>
 
                     <!-- Main Form Card -->
-                    <div class="relative bg-white rounded-3xl shadow-2xl shadow-navy-200/50 overflow-hidden border border-navy-100">
+                    <div class="relative bg-white dark:bg-navy-800 rounded-3xl shadow-2xl shadow-navy-200/50 dark:shadow-navy-950/50 overflow-hidden border border-navy-100 dark:border-navy-700">
                         <div class="grid lg:grid-cols-5">
                             <!-- Left Side - Form -->
                             <div class="lg:col-span-3 p-8 lg:p-12">
                                 <div class="mb-8">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-primary-50 text-primary-600 text-xs font-semibold mb-4">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-xs font-semibold mb-4">
                                         <span class="w-2 h-2 bg-primary-500 rounded-full mr-2 animate-pulse"></span>
                                         Get in Touch
                                     </span>
-                                    <h2 class="text-3xl font-bold text-navy-900 mb-2">Send us a message</h2>
-                                    <p class="text-navy-500">We'd love to hear from you. Fill out the form below.</p>
+                                    <h2 class="text-3xl font-bold text-navy-900 dark:text-white mb-2">Send us a message</h2>
+                                    <p class="text-navy-500 dark:text-navy-400">We'd love to hear from you. Fill out the form below.</p>
                                 </div>
 
                                 <form @submit.prevent="submitForm" class="space-y-6">
@@ -220,7 +220,7 @@ const getIconType = (link) => {
                                                     type="text"
                                                     required
                                                     placeholder="Your name"
-                                                    class="w-full pl-12 pr-4 py-4 bg-navy-50/50 border-2 border-transparent rounded-2xl text-navy-900 placeholder-navy-400 focus:bg-white focus:border-primary-500 focus:shadow-lg focus:shadow-primary-500/10 outline-none transition-all duration-300"
+                                                    class="w-full pl-12 pr-4 py-4 bg-navy-50/50 dark:bg-navy-700/50 border-2 border-transparent rounded-2xl text-navy-900 dark:text-white placeholder-navy-400 dark:placeholder-navy-500 focus:bg-white dark:focus:bg-navy-700 focus:border-primary-500 focus:shadow-lg focus:shadow-primary-500/10 outline-none transition-all duration-300"
                                                 />
                                             </div>
                                         </div>
@@ -238,7 +238,7 @@ const getIconType = (link) => {
                                                     type="email"
                                                     required
                                                     placeholder="you@example.com"
-                                                    class="w-full pl-12 pr-4 py-4 bg-navy-50/50 border-2 border-transparent rounded-2xl text-navy-900 placeholder-navy-400 focus:bg-white focus:border-primary-500 focus:shadow-lg focus:shadow-primary-500/10 outline-none transition-all duration-300"
+                                                    class="w-full pl-12 pr-4 py-4 bg-navy-50/50 dark:bg-navy-700/50 border-2 border-transparent rounded-2xl text-navy-900 dark:text-white placeholder-navy-400 dark:placeholder-navy-500 focus:bg-white dark:focus:bg-navy-700 focus:border-primary-500 focus:shadow-lg focus:shadow-primary-500/10 outline-none transition-all duration-300"
                                                 />
                                             </div>
                                         </div>
@@ -255,7 +255,7 @@ const getIconType = (link) => {
                                             <select
                                                 v-model="formData.category"
                                                 required
-                                                class="w-full pl-12 pr-4 py-4 bg-navy-50/50 border-2 border-transparent rounded-2xl text-navy-900 focus:bg-white focus:border-primary-500 focus:shadow-lg focus:shadow-primary-500/10 outline-none transition-all duration-300 appearance-none cursor-pointer"
+                                                class="w-full pl-12 pr-4 py-4 bg-navy-50/50 dark:bg-navy-700/50 border-2 border-transparent rounded-2xl text-navy-900 dark:text-white focus:bg-white dark:focus:bg-navy-700 focus:border-primary-500 focus:shadow-lg focus:shadow-primary-500/10 outline-none transition-all duration-300 appearance-none cursor-pointer"
                                             >
                                                 <option value="">Select a category</option>
                                                 <option value="technical">Technical Support</option>
@@ -286,7 +286,7 @@ const getIconType = (link) => {
                                                 type="text"
                                                 required
                                                 placeholder="Brief subject of your inquiry"
-                                                class="w-full pl-12 pr-4 py-4 bg-navy-50/50 border-2 border-transparent rounded-2xl text-navy-900 placeholder-navy-400 focus:bg-white focus:border-primary-500 focus:shadow-lg focus:shadow-primary-500/10 outline-none transition-all duration-300"
+                                                class="w-full pl-12 pr-4 py-4 bg-navy-50/50 dark:bg-navy-700/50 border-2 border-transparent rounded-2xl text-navy-900 dark:text-white placeholder-navy-400 dark:placeholder-navy-500 focus:bg-white dark:focus:bg-navy-700 focus:border-primary-500 focus:shadow-lg focus:shadow-primary-500/10 outline-none transition-all duration-300"
                                             />
                                         </div>
                                     </div>
@@ -304,7 +304,7 @@ const getIconType = (link) => {
                                                 required
                                                 rows="4"
                                                 placeholder="How can we help you?"
-                                                class="w-full pl-12 pr-4 py-4 bg-navy-50/50 border-2 border-transparent rounded-2xl text-navy-900 placeholder-navy-400 focus:bg-white focus:border-primary-500 focus:shadow-lg focus:shadow-primary-500/10 outline-none transition-all duration-300 resize-none"
+                                                class="w-full pl-12 pr-4 py-4 bg-navy-50/50 dark:bg-navy-700/50 border-2 border-transparent rounded-2xl text-navy-900 dark:text-white placeholder-navy-400 dark:placeholder-navy-500 focus:bg-white dark:focus:bg-navy-700 focus:border-primary-500 focus:shadow-lg focus:shadow-primary-500/10 outline-none transition-all duration-300 resize-none"
                                             ></textarea>
                                         </div>
                                     </div>
@@ -408,26 +408,26 @@ const getIconType = (link) => {
                 <!-- FAQ Section Below -->
                 <div class="mt-16">
                     <div class="text-center mb-10">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-navy-100 text-navy-600 text-xs font-semibold mb-4">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-navy-100 dark:bg-navy-800 text-navy-600 dark:text-navy-300 text-xs font-semibold mb-4">
                             FAQ
                         </span>
-                        <h2 class="text-3xl font-bold text-navy-900 mb-2">Frequently Asked Questions</h2>
-                        <p class="text-navy-500">Quick answers to common questions</p>
+                        <h2 class="text-3xl font-bold text-navy-900 dark:text-white mb-2">Frequently Asked Questions</h2>
+                        <p class="text-navy-500 dark:text-navy-400">Quick answers to common questions</p>
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-6">
                         <div
                             v-for="(faq, index) in faqsData"
                             :key="index"
-                            class="group bg-white rounded-2xl p-6 border border-navy-100 hover:border-primary-200 hover:shadow-xl hover:shadow-navy-100/50 transition-all duration-300"
+                            class="group bg-white dark:bg-navy-800 rounded-2xl p-6 border border-navy-100 dark:border-navy-700 hover:border-primary-200 dark:hover:border-primary-800 hover:shadow-xl hover:shadow-navy-100/50 dark:hover:shadow-navy-950/50 transition-all duration-300"
                         >
                             <div class="flex items-start">
                                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-blue-500 flex items-center justify-center mr-4 flex-shrink-0 group-hover:scale-110 transition-transform">
                                     <span class="text-white font-bold text-sm">{{ index + 1 }}</span>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-navy-900 mb-2 group-hover:text-primary-600 transition-colors">{{ faq.q }}</h3>
-                                    <p class="text-navy-600 text-sm leading-relaxed">{{ faq.a }}</p>
+                                    <h3 class="font-semibold text-navy-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{{ faq.q }}</h3>
+                                    <p class="text-navy-600 dark:text-navy-300 text-sm leading-relaxed">{{ faq.a }}</p>
                                 </div>
                             </div>
                         </div>
@@ -459,11 +459,11 @@ const getIconType = (link) => {
                         leave-from-class="opacity-100 scale-100"
                         leave-to-class="opacity-0 scale-95"
                     >
-                        <div v-if="showSuccessModal" class="relative bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
+                        <div v-if="showSuccessModal" class="relative bg-white dark:bg-navy-800 rounded-3xl p-8 max-w-md w-full shadow-2xl">
                             <!-- Close Button -->
                             <button
                                 @click="closeModal"
-                                class="absolute top-4 right-4 text-navy-400 hover:text-navy-600 transition-colors"
+                                class="absolute top-4 right-4 text-navy-400 hover:text-navy-600 dark:hover:text-navy-200 transition-colors"
                             >
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -482,14 +482,14 @@ const getIconType = (link) => {
                                     </div>
                                 </div>
 
-                                <h3 class="text-2xl font-bold text-navy-900 mb-2">Message Sent!</h3>
-                                <p class="text-navy-600 mb-6">
+                                <h3 class="text-2xl font-bold text-navy-900 dark:text-white mb-2">Message Sent!</h3>
+                                <p class="text-navy-600 dark:text-navy-300 mb-6">
                                     Thank you for reaching out. Our team will get back to you within 24 hours.
                                 </p>
 
                                 <!-- Divider -->
-                                <div class="border-t border-navy-100 pt-6 mb-6">
-                                    <p class="text-sm text-navy-500">
+                                <div class="border-t border-navy-100 dark:border-navy-700 pt-6 mb-6">
+                                    <p class="text-sm text-navy-500 dark:text-navy-400">
                                         In the meantime, explore our resources:
                                     </p>
                                 </div>
@@ -498,7 +498,7 @@ const getIconType = (link) => {
                                 <div class="flex gap-3">
                                     <a
                                         href="/tutorials"
-                                        class="flex-1 px-4 py-3 bg-navy-100 hover:bg-navy-200 text-navy-700 font-medium rounded-xl transition-colors text-sm"
+                                        class="flex-1 px-4 py-3 bg-navy-100 dark:bg-navy-700 hover:bg-navy-200 dark:hover:bg-navy-600 text-navy-700 dark:text-navy-200 font-medium rounded-xl transition-colors text-sm"
                                     >
                                         Browse Tutorials
                                     </a>

@@ -110,7 +110,7 @@ const totalServicesCount = computed(() => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-navy-50">
+    <div class="min-h-screen bg-navy-50 dark:bg-navy-950">
         <Head>
             <title>Azure Services - Browse All Tutorials | AzureSkill</title>
             <meta name="description" content="Browse all Azure service tutorials. Learn Compute, Storage, Networking, Databases, AI/ML, Security, DevOps, and more." />
@@ -227,7 +227,7 @@ const totalServicesCount = computed(() => {
 
                 <!-- Sidebar -->
                 <aside
-                    class="fixed lg:sticky lg:top-24 inset-y-0 left-0 z-40 w-64 bg-white lg:bg-transparent transform transition-transform duration-300 lg:transform-none overflow-y-auto"
+                    class="fixed lg:sticky lg:top-24 inset-y-0 left-0 z-40 w-64 bg-white dark:bg-navy-900 lg:bg-transparent transform transition-transform duration-300 lg:transform-none overflow-y-auto"
                     :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
                 >
                     <!-- Mobile Overlay -->
@@ -237,9 +237,9 @@ const totalServicesCount = computed(() => {
                         class="fixed inset-0 bg-black/50 lg:hidden -z-10"
                     ></div>
 
-                    <div class="bg-white rounded-2xl shadow-sm border border-navy-100 p-4 lg:max-h-[calc(100vh-8rem)] overflow-y-auto">
+                    <div class="bg-white dark:bg-navy-800 rounded-2xl shadow-sm border border-navy-100 dark:border-navy-700 p-4 lg:max-h-[calc(100vh-8rem)] overflow-y-auto">
                         <div class="flex items-center justify-between mb-4 lg:hidden">
-                            <h3 class="font-bold text-navy-900">Categories</h3>
+                            <h3 class="font-bold text-navy-900 dark:text-white">Categories</h3>
                             <button @click="isSidebarOpen = false" class="text-navy-400 hover:text-navy-600">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -254,8 +254,8 @@ const totalServicesCount = computed(() => {
                                 @click="selectedCategory = category.id; isSidebarOpen = false"
                                 class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200"
                                 :class="selectedCategory === category.id
-                                    ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-600'
-                                    : 'text-navy-600 hover:bg-navy-50 hover:text-navy-900'"
+                                    ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border-l-4 border-primary-600'
+                                    : 'text-navy-600 dark:text-navy-300 hover:bg-navy-50 dark:hover:bg-navy-700 hover:text-navy-900 dark:hover:text-white'"
                             >
                                 <span class="flex items-center">
                                     <!-- Category Icons -->
@@ -302,7 +302,7 @@ const totalServicesCount = computed(() => {
                                     </svg>
                                     {{ category.name }}
                                 </span>
-                                <span class="text-xs bg-navy-100 text-navy-600 px-2 py-0.5 rounded-full">
+                                <span class="text-xs bg-navy-100 dark:bg-navy-700 text-navy-600 dark:text-navy-300 px-2 py-0.5 rounded-full">
                                     {{ category.count }}
                                 </span>
                             </button>
@@ -315,10 +315,10 @@ const totalServicesCount = computed(() => {
                     <!-- Header Bar -->
                     <div class="flex items-center justify-between mb-6">
                         <div>
-                            <h2 class="text-xl font-bold text-navy-900">
+                            <h2 class="text-xl font-bold text-navy-900 dark:text-white">
                                 {{ sidebarCategories.find(c => c.id === selectedCategory)?.name || 'All Services' }}
                             </h2>
-                            <p class="text-sm text-navy-500">{{ totalFilteredCount }} services found</p>
+                            <p class="text-sm text-navy-500 dark:text-navy-400">{{ totalFilteredCount }} services found</p>
                         </div>
                     </div>
 
@@ -327,11 +327,11 @@ const totalServicesCount = computed(() => {
                         <div
                             v-for="(category, categoryKey) in filteredServices"
                             :key="categoryKey"
-                            class="bg-white rounded-2xl shadow-sm border border-navy-100 overflow-hidden"
+                            class="bg-white dark:bg-navy-800 rounded-2xl shadow-sm border border-navy-100 dark:border-navy-700 overflow-hidden"
                         >
                             <!-- Category Header -->
-                            <div class="px-6 py-4 bg-navy-50 border-b border-navy-100">
-                                <h3 class="font-semibold text-navy-800">{{ category.name }}</h3>
+                            <div class="px-6 py-4 bg-navy-50 dark:bg-navy-700/50 border-b border-navy-100 dark:border-navy-700">
+                                <h3 class="font-semibold text-navy-800 dark:text-white">{{ category.name }}</h3>
                             </div>
 
                             <!-- Services Grid -->
@@ -341,7 +341,7 @@ const totalServicesCount = computed(() => {
                                         v-for="service in category.items"
                                         :key="service.slug"
                                         :href="`/tutorials/${service.slug}`"
-                                        class="group flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary-50 transition-all duration-200 border border-transparent hover:border-primary-200"
+                                        class="group flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-200 border border-transparent hover:border-primary-200 dark:hover:border-primary-800"
                                     >
                                         <!-- Service Icon -->
                                         <div class="w-8 h-8 flex-shrink-0 flex items-center justify-center">
@@ -761,13 +761,13 @@ const totalServicesCount = computed(() => {
 
                                         <!-- Service Name -->
                                         <div class="flex-1 min-w-0">
-                                            <span class="text-sm font-medium text-navy-700 group-hover:text-primary-700 transition-colors truncate block">
+                                            <span class="text-sm font-medium text-navy-700 dark:text-navy-200 group-hover:text-primary-700 dark:group-hover:text-primary-400 transition-colors truncate block">
                                                 {{ service.name }}
                                             </span>
                                         </div>
 
                                         <!-- Tutorial Count Badge -->
-                                        <span class="text-xs text-navy-400 group-hover:text-primary-600 transition-colors">
+                                        <span class="text-xs text-navy-400 dark:text-navy-500 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                                             {{ service.tutorials }}
                                         </span>
                                     </a>
@@ -777,14 +777,14 @@ const totalServicesCount = computed(() => {
                     </div>
 
                     <!-- Empty State -->
-                    <div v-else class="bg-white rounded-2xl shadow-sm border border-navy-100 p-12 text-center">
-                        <div class="w-16 h-16 bg-navy-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div v-else class="bg-white dark:bg-navy-800 rounded-2xl shadow-sm border border-navy-100 dark:border-navy-700 p-12 text-center">
+                        <div class="w-16 h-16 bg-navy-100 dark:bg-navy-700 rounded-full flex items-center justify-center mx-auto mb-4">
                             <svg class="w-8 h-8 text-navy-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
                         </div>
-                        <h3 class="text-lg font-bold text-navy-900 mb-2">No services found</h3>
-                        <p class="text-navy-500 mb-6">Try adjusting your search or browse a different category</p>
+                        <h3 class="text-lg font-bold text-navy-900 dark:text-white mb-2">No services found</h3>
+                        <p class="text-navy-500 dark:text-navy-400 mb-6">Try adjusting your search or browse a different category</p>
                         <button
                             @click="searchQuery = ''; selectedCategory = 'all'"
                             class="px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"

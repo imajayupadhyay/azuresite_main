@@ -32,7 +32,7 @@ const filteredCertifications = computed(() => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-primary-50/30">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-primary-50/30 dark:from-navy-950 dark:to-navy-950">
         <Head>
             <title>Azure Certifications - Microsoft Azure Exam Preparation | AzureSkill</title>
             <meta name="description" content="Prepare for 12 Microsoft Azure certifications including AZ-900, AZ-104, AZ-305. Complete exam guides, preparation resources, and learning paths for all levels." />

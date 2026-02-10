@@ -8,7 +8,7 @@ import CallToAction from './Components/CallToAction.vue';
 </script>
 
 <template>
-    <div class="min-h-screen">
+    <div class="min-h-screen bg-white dark:bg-navy-950 transition-colors duration-300">
         <Head>
             <title>AzureSkill - Master Azure Cloud Hands-On | Free Tutorials & Certifications</title>
             <meta name="description" content="Learn Microsoft Azure with 200+ free hands-on tutorials, comprehensive guides, and certification preparation. Master Azure services from beginner to expert level." />

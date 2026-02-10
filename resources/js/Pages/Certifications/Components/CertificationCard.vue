@@ -36,11 +36,11 @@ const getSlug = () => {
 <template>
     <a
         :href="`/certifications/${getSlug()}`"
-        class="group relative bg-white/70 backdrop-blur-xl rounded-2xl border-2 border-primary-200 hover:border-primary-400 p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 block"
+        class="group relative bg-white/70 dark:bg-navy-800/70 backdrop-blur-xl rounded-2xl border-2 border-primary-200 dark:border-navy-600 hover:border-primary-400 dark:hover:border-primary-500 p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 block"
         :style="{ transitionDelay: `${index * 50}ms` }"
     >
         <!-- Glass Effect Background -->
-        <div class="absolute inset-0 bg-gradient-to-br from-primary-50/50 to-white/50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-primary-50/50 to-white/50 dark:from-primary-900/20 dark:to-navy-800/50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
         <!-- Card Content -->
         <div class="relative">
@@ -48,7 +48,7 @@ const getSlug = () => {
             <div class="flex items-start justify-between mb-4">
                 <div class="flex items-center space-x-4">
                     <!-- Azure Badge -->
-                    <div class="w-16 h-16 bg-white rounded-xl border-2 border-primary-200 flex items-center justify-center shadow-lg p-2 group-hover:scale-110 transition-transform duration-300">
+                    <div class="w-16 h-16 bg-white dark:bg-navy-700 rounded-xl border-2 border-primary-200 dark:border-navy-600 flex items-center justify-center shadow-lg p-2 group-hover:scale-110 transition-transform duration-300">
                         <img 
                             :src="getBadgeUrl(certification.level)" 
                             :alt="`${certification.name} Badge`"
@@ -68,29 +68,29 @@ const getSlug = () => {
             </div>
 
             <!-- Certification Name -->
-            <h3 class="text-xl font-bold text-navy-900 mb-3 group-hover:text-primary-600 transition-colors leading-tight">
+            <h3 class="text-xl font-bold text-navy-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-tight">
                 {{ certification.name }}
             </h3>
 
             <!-- Description -->
-            <p class="text-sm text-navy-600 mb-4 leading-relaxed line-clamp-3">
+            <p class="text-sm text-navy-600 dark:text-navy-300 mb-4 leading-relaxed line-clamp-3">
                 {{ certification.description }}
             </p>
 
             <!-- Skills -->
             <div class="mb-4">
-                <p class="text-xs font-semibold text-navy-700 mb-2">Key Skills:</p>
+                <p class="text-xs font-semibold text-navy-700 dark:text-navy-300 mb-2">Key Skills:</p>
                 <div class="flex flex-wrap gap-2">
                     <span
                         v-for="skill in certification.skills.slice(0, 3)"
                         :key="skill"
-                        class="px-2.5 py-1 bg-primary-50 text-primary-700 text-xs font-medium rounded-lg border border-primary-200"
+                        class="px-2.5 py-1 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs font-medium rounded-lg border border-primary-200 dark:border-primary-800"
                     >
                         {{ skill }}
                     </span>
                     <span
                         v-if="certification.skills.length > 3"
-                        class="px-2.5 py-1 bg-gray-50 text-gray-600 text-xs font-medium rounded-lg border border-gray-200"
+                        class="px-2.5 py-1 bg-gray-50 dark:bg-navy-700 text-gray-600 dark:text-navy-300 text-xs font-medium rounded-lg border border-gray-200 dark:border-navy-600"
                     >
                         +{{ certification.skills.length - 3 }}
                     </span>
@@ -99,22 +99,22 @@ const getSlug = () => {
 
             <!-- Exam Info -->
             <div class="grid grid-cols-3 gap-2 mb-4">
-                <div class="bg-primary-50/50 backdrop-blur-sm px-3 py-2 rounded-lg text-center">
-                    <p class="text-xs text-navy-600">Duration</p>
+                <div class="bg-primary-50/50 dark:bg-navy-700/50 backdrop-blur-sm px-3 py-2 rounded-lg text-center">
+                    <p class="text-xs text-navy-600 dark:text-navy-400">Duration</p>
                     <p class="text-sm font-bold text-primary-600">{{ certification.examLength }}</p>
                 </div>
-                <div class="bg-primary-50/50 backdrop-blur-sm px-3 py-2 rounded-lg text-center">
-                    <p class="text-xs text-navy-600">Questions</p>
+                <div class="bg-primary-50/50 dark:bg-navy-700/50 backdrop-blur-sm px-3 py-2 rounded-lg text-center">
+                    <p class="text-xs text-navy-600 dark:text-navy-400">Questions</p>
                     <p class="text-sm font-bold text-primary-600">{{ certification.questions }}</p>
                 </div>
-                <div class="bg-primary-50/50 backdrop-blur-sm px-3 py-2 rounded-lg text-center">
-                    <p class="text-xs text-navy-600">Pass Score</p>
+                <div class="bg-primary-50/50 dark:bg-navy-700/50 backdrop-blur-sm px-3 py-2 rounded-lg text-center">
+                    <p class="text-xs text-navy-600 dark:text-navy-400">Pass Score</p>
                     <p class="text-sm font-bold text-primary-600">{{ certification.passingScore }}</p>
                 </div>
             </div>
 
             <!-- Prep Time -->
-            <div class="flex items-center text-sm text-navy-600 mb-4 bg-primary-50/50 backdrop-blur-sm px-3 py-2 rounded-lg">
+            <div class="flex items-center text-sm text-navy-600 dark:text-navy-300 mb-4 bg-primary-50/50 dark:bg-navy-700/50 backdrop-blur-sm px-3 py-2 rounded-lg">
                 <svg class="w-4 h-4 mr-1.5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>

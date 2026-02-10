@@ -51,7 +51,7 @@ const features = [
 </script>
 
 <template>
-    <section id="features-section" class="relative py-24 bg-navy-50 overflow-hidden">
+    <section id="features-section" class="relative py-24 bg-navy-50 dark:bg-navy-950 overflow-hidden">
         <!-- SVG Background Pattern -->
         <div class="absolute inset-0 opacity-50">
             <svg class="absolute w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -65,8 +65,8 @@ const features = [
         </div>
 
         <!-- Decorative Blobs -->
-        <div class="absolute top-0 right-0 w-96 h-96 bg-primary-200/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-        <div class="absolute bottom-0 left-0 w-80 h-80 bg-blue-200/30 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-primary-200/30 dark:bg-primary-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-blue-200/30 dark:bg-blue-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Section Header -->
@@ -74,16 +74,16 @@ const features = [
                 class="text-center mb-16 transition-all duration-700"
                 :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
             >
-                <div class="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-4">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 text-sm font-medium mb-4">
                     <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                     </svg>
                     Everything You Need
                 </div>
-                <h2 class="text-4xl sm:text-5xl font-bold text-navy-900 mb-4">
+                <h2 class="text-4xl sm:text-5xl font-bold text-navy-900 dark:text-white mb-4">
                     Your Path to Azure Mastery
                 </h2>
-                <p class="text-lg text-navy-600 max-w-2xl mx-auto">
+                <p class="text-lg text-navy-600 dark:text-navy-300 max-w-2xl mx-auto">
                     From beginner to expert, we provide all the resources you need to succeed with Microsoft Azure.
                 </p>
             </div>
@@ -94,7 +94,7 @@ const features = [
                     v-for="(feature, index) in features"
                     :key="feature.title"
                     :href="feature.link"
-                    class="group relative bg-white rounded-2xl p-8 shadow-lg shadow-navy-900/5 border border-navy-100 hover:shadow-xl hover:shadow-navy-900/10 hover:-translate-y-2 transition-all duration-500"
+                    class="group relative bg-white dark:bg-navy-800/80 rounded-2xl p-8 shadow-lg shadow-navy-900/5 dark:shadow-navy-950/20 border border-navy-100 dark:border-navy-700 hover:shadow-xl hover:shadow-navy-900/10 dark:hover:shadow-navy-950/40 hover:-translate-y-2 transition-all duration-500"
                     :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'"
                     :style="{ transitionDelay: `${index * 150}ms` }"
                 >
@@ -125,15 +125,15 @@ const features = [
                     </div>
 
                     <!-- Content -->
-                    <h3 class="text-xl font-bold text-navy-900 mb-3 group-hover:text-primary-600 transition-colors">
+                    <h3 class="text-xl font-bold text-navy-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                         {{ feature.title }}
                     </h3>
-                    <p class="text-navy-600 mb-6 leading-relaxed">
+                    <p class="text-navy-600 dark:text-navy-300 mb-6 leading-relaxed">
                         {{ feature.description }}
                     </p>
 
                     <!-- Stats -->
-                    <div class="flex items-center justify-between pt-6 border-t border-navy-100">
+                    <div class="flex items-center justify-between pt-6 border-t border-navy-100 dark:border-navy-600">
                         <div>
                             <span
                                 class="text-2xl font-bold bg-clip-text text-transparent"
@@ -141,10 +141,10 @@ const features = [
                             >
                                 {{ feature.stats }}
                             </span>
-                            <span class="text-sm text-navy-500 ml-1">{{ feature.statsLabel }}</span>
+                            <span class="text-sm text-navy-500 dark:text-navy-400 ml-1">{{ feature.statsLabel }}</span>
                         </div>
-                        <div class="w-10 h-10 rounded-full bg-navy-100 flex items-center justify-center group-hover:bg-primary-100 transition-colors">
-                            <svg class="w-5 h-5 text-navy-400 group-hover:text-primary-600 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-10 h-10 rounded-full bg-navy-100 dark:bg-navy-700 flex items-center justify-center group-hover:bg-primary-100 dark:group-hover:bg-primary-900/40 transition-colors">
+                            <svg class="w-5 h-5 text-navy-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                             </svg>
                         </div>

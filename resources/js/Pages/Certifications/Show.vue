@@ -53,7 +53,7 @@ const tabs = [
 </script>
 
 <template>
-    <div class="min-h-screen bg-navy-50">
+    <div class="min-h-screen bg-navy-50 dark:bg-navy-950">
         <Head>
             <title>{{ certification.code }} - {{ certification.name }} | AzureSkill</title>
             <meta name="description" :content="certification.description" />
@@ -181,7 +181,7 @@ const tabs = [
         </section>
 
         <!-- Tab Navigation -->
-        <div class="sticky top-0 z-30 bg-white border-b border-navy-100 shadow-sm">
+        <div class="sticky top-0 z-30 bg-white dark:bg-navy-900 border-b border-navy-100 dark:border-navy-700 shadow-sm">
             <div class="w-full px-4 sm:px-6 lg:px-12 xl:px-20">
                 <div class="max-w-5xl mx-auto">
                     <nav class="flex overflow-x-auto -mb-px">
@@ -191,8 +191,8 @@ const tabs = [
                             @click="activeTab = tab.id"
                             class="flex items-center px-4 sm:px-6 py-4 text-sm font-medium border-b-2 whitespace-nowrap transition-colors"
                             :class="activeTab === tab.id
-                                ? 'border-primary-500 text-primary-600'
-                                : 'border-transparent text-navy-500 hover:text-navy-700 hover:border-navy-300'"
+                                ? 'border-primary-500 text-primary-600 dark:text-primary-400'
+                                : 'border-transparent text-navy-500 dark:text-navy-400 hover:text-navy-700 dark:hover:text-navy-200 hover:border-navy-300 dark:hover:border-navy-600'"
                         >
                             {{ tab.name }}
                         </button>
@@ -207,16 +207,16 @@ const tabs = [
                 <!-- Overview Tab -->
                 <div v-show="activeTab === 'overview'" class="space-y-8">
                     <!-- Description -->
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-navy-100">
-                        <h2 class="text-xl font-bold text-navy-900 mb-4">About This Certification</h2>
-                        <p class="text-navy-600 leading-relaxed">{{ certification.longDescription }}</p>
+                    <div class="bg-white dark:bg-navy-800 rounded-2xl p-6 sm:p-8 border border-navy-100 dark:border-navy-700">
+                        <h2 class="text-xl font-bold text-navy-900 dark:text-white mb-4">About This Certification</h2>
+                        <p class="text-navy-600 dark:text-navy-300 leading-relaxed">{{ certification.longDescription }}</p>
                     </div>
 
                     <!-- Two Column Layout -->
                     <div class="grid lg:grid-cols-2 gap-6">
                         <!-- Prerequisites -->
-                        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-navy-100">
-                            <h3 class="text-lg font-bold text-navy-900 mb-4 flex items-center">
+                        <div class="bg-white dark:bg-navy-800 rounded-2xl p-6 sm:p-8 border border-navy-100 dark:border-navy-700">
+                            <h3 class="text-lg font-bold text-navy-900 dark:text-white mb-4 flex items-center">
                                 <svg class="w-5 h-5 text-primary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
@@ -227,14 +227,14 @@ const tabs = [
                                     <svg class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                     </svg>
-                                    <span class="text-navy-600 text-sm">{{ prereq }}</span>
+                                    <span class="text-navy-600 dark:text-navy-300 text-sm">{{ prereq }}</span>
                                 </li>
                             </ul>
                         </div>
 
                         <!-- Target Audience -->
-                        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-navy-100">
-                            <h3 class="text-lg font-bold text-navy-900 mb-4 flex items-center">
+                        <div class="bg-white dark:bg-navy-800 rounded-2xl p-6 sm:p-8 border border-navy-100 dark:border-navy-700">
+                            <h3 class="text-lg font-bold text-navy-900 dark:text-white mb-4 flex items-center">
                                 <svg class="w-5 h-5 text-primary-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                                 </svg>
@@ -245,7 +245,7 @@ const tabs = [
                                     <svg class="w-5 h-5 text-primary-500 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
                                     </svg>
-                                    <span class="text-navy-600 text-sm">{{ audience }}</span>
+                                    <span class="text-navy-600 dark:text-navy-300 text-sm">{{ audience }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -280,29 +280,29 @@ const tabs = [
 
                 <!-- Curriculum Tab -->
                 <div v-show="activeTab === 'curriculum'" class="space-y-6">
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-navy-100">
-                        <h2 class="text-xl font-bold text-navy-900 mb-6">Course Curriculum</h2>
+                    <div class="bg-white dark:bg-navy-800 rounded-2xl p-6 sm:p-8 border border-navy-100 dark:border-navy-700">
+                        <h2 class="text-xl font-bold text-navy-900 dark:text-white mb-6">Course Curriculum</h2>
                         <div class="space-y-4">
                             <div
                                 v-for="module in certification.modules"
                                 :key="module.number"
-                                class="border border-navy-100 rounded-xl overflow-hidden hover:border-primary-200 transition-colors"
+                                class="border border-navy-100 dark:border-navy-700 rounded-xl overflow-hidden hover:border-primary-200 dark:hover:border-primary-800 transition-colors"
                             >
-                                <div class="bg-navy-50 px-5 py-4 flex items-center justify-between">
+                                <div class="bg-navy-50 dark:bg-navy-700/50 px-5 py-4 flex items-center justify-between">
                                     <div class="flex items-center">
                                         <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-blue-500 text-white flex items-center justify-center text-sm font-bold mr-4">
                                             {{ module.number }}
                                         </span>
                                         <div>
-                                            <h3 class="font-semibold text-navy-900">{{ module.title }}</h3>
-                                            <p class="text-xs text-navy-500">{{ module.duration }}</p>
+                                            <h3 class="font-semibold text-navy-900 dark:text-white">{{ module.title }}</h3>
+                                            <p class="text-xs text-navy-500 dark:text-navy-400">{{ module.duration }}</p>
                                         </div>
                                     </div>
-                                    <span class="text-xs text-navy-500 bg-white px-3 py-1 rounded-full">{{ module.lessons.length }} lessons</span>
+                                    <span class="text-xs text-navy-500 dark:text-navy-400 bg-white dark:bg-navy-800 px-3 py-1 rounded-full">{{ module.lessons.length }} lessons</span>
                                 </div>
                                 <div class="p-5">
                                     <ul class="space-y-2">
-                                        <li v-for="(lesson, index) in module.lessons" :key="index" class="flex items-center text-sm text-navy-600">
+                                        <li v-for="(lesson, index) in module.lessons" :key="index" class="flex items-center text-sm text-navy-600 dark:text-navy-300">
                                             <svg class="w-4 h-4 text-primary-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -318,25 +318,25 @@ const tabs = [
 
                 <!-- Skills Measured Tab -->
                 <div v-show="activeTab === 'skills'" class="space-y-6">
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-navy-100">
-                        <h2 class="text-xl font-bold text-navy-900 mb-2">Skills Measured</h2>
-                        <p class="text-navy-500 text-sm mb-6">These are the key areas covered in the exam and their approximate weightage.</p>
+                    <div class="bg-white dark:bg-navy-800 rounded-2xl p-6 sm:p-8 border border-navy-100 dark:border-navy-700">
+                        <h2 class="text-xl font-bold text-navy-900 dark:text-white mb-2">Skills Measured</h2>
+                        <p class="text-navy-500 dark:text-navy-400 text-sm mb-6">These are the key areas covered in the exam and their approximate weightage.</p>
 
                         <div class="space-y-6">
                             <div
                                 v-for="(skill, index) in certification.skills"
                                 :key="index"
-                                class="border border-navy-100 rounded-xl p-5 hover:border-primary-200 transition-colors"
+                                class="border border-navy-100 dark:border-navy-700 rounded-xl p-5 hover:border-primary-200 dark:hover:border-primary-800 transition-colors"
                             >
                                 <div class="flex items-start justify-between mb-4">
-                                    <h3 class="font-semibold text-navy-900 flex-1">{{ skill.name }}</h3>
-                                    <span class="px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-sm font-medium ml-4">
+                                    <h3 class="font-semibold text-navy-900 dark:text-white flex-1">{{ skill.name }}</h3>
+                                    <span class="px-3 py-1 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium ml-4">
                                         {{ skill.weight }}
                                     </span>
                                 </div>
 
                                 <!-- Progress Bar -->
-                                <div class="h-2 bg-navy-100 rounded-full mb-4 overflow-hidden">
+                                <div class="h-2 bg-navy-100 dark:bg-navy-700 rounded-full mb-4 overflow-hidden">
                                     <div
                                         class="h-full bg-gradient-to-r from-primary-500 to-blue-500 rounded-full"
                                         :style="{ width: skill.weight.split('-')[1] || skill.weight }"
@@ -344,7 +344,7 @@ const tabs = [
                                 </div>
 
                                 <ul class="space-y-2">
-                                    <li v-for="(topic, tIndex) in skill.topics" :key="tIndex" class="flex items-start text-sm text-navy-600">
+                                    <li v-for="(topic, tIndex) in skill.topics" :key="tIndex" class="flex items-start text-sm text-navy-600 dark:text-navy-300">
                                         <svg class="w-4 h-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                         </svg>
@@ -364,7 +364,7 @@ const tabs = [
                             :key="index"
                             :href="resource.url"
                             target="_blank"
-                            class="group bg-white rounded-2xl p-6 border border-navy-100 hover:border-primary-200 hover:shadow-lg transition-all duration-300"
+                            class="group bg-white dark:bg-navy-800 rounded-2xl p-6 border border-navy-100 dark:border-navy-700 hover:border-primary-200 dark:hover:border-primary-800 hover:shadow-lg transition-all duration-300"
                         >
                             <div class="flex items-start">
                                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-blue-500 flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
@@ -383,12 +383,12 @@ const tabs = [
                                     </svg>
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="font-semibold text-navy-900 group-hover:text-primary-600 transition-colors mb-1">
+                                    <h3 class="font-semibold text-navy-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors mb-1">
                                         {{ resource.title }}
                                     </h3>
-                                    <p class="text-sm text-navy-500">{{ resource.description }}</p>
+                                    <p class="text-sm text-navy-500 dark:text-navy-400">{{ resource.description }}</p>
                                 </div>
-                                <svg class="w-5 h-5 text-navy-300 group-hover:text-primary-500 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-5 h-5 text-navy-300 dark:text-navy-500 group-hover:text-primary-500 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                 </svg>
                             </div>
@@ -401,13 +401,13 @@ const tabs = [
                     <div
                         v-for="(faq, index) in certification.faqs"
                         :key="index"
-                        class="bg-white rounded-2xl border border-navy-100 overflow-hidden"
+                        class="bg-white dark:bg-navy-800 rounded-2xl border border-navy-100 dark:border-navy-700 overflow-hidden"
                     >
                         <button
                             @click="toggleFaq(index)"
-                            class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-navy-50 transition-colors"
+                            class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-navy-50 dark:hover:bg-navy-700 transition-colors"
                         >
-                            <span class="font-semibold text-navy-900 pr-4">{{ faq.question }}</span>
+                            <span class="font-semibold text-navy-900 dark:text-white pr-4">{{ faq.question }}</span>
                             <svg
                                 class="w-5 h-5 text-navy-400 flex-shrink-0 transition-transform duration-300"
                                 :class="{ 'rotate-180': expandedFaq === index }"
@@ -427,7 +427,7 @@ const tabs = [
                             leave-to-class="opacity-0 max-h-0"
                         >
                             <div v-show="expandedFaq === index" class="px-6 pb-5 overflow-hidden">
-                                <p class="text-navy-600 text-sm leading-relaxed">{{ faq.answer }}</p>
+                                <p class="text-navy-600 dark:text-navy-300 text-sm leading-relaxed">{{ faq.answer }}</p>
                             </div>
                         </transition>
                     </div>
@@ -435,21 +435,21 @@ const tabs = [
 
                 <!-- Related Certifications -->
                 <div v-if="certification.relatedCertifications?.length" class="mt-12">
-                    <h3 class="text-xl font-bold text-navy-900 mb-6">Related Certifications</h3>
+                    <h3 class="text-xl font-bold text-navy-900 dark:text-white mb-6">Related Certifications</h3>
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <a
                             v-for="related in certification.relatedCertifications"
                             :key="related.slug"
                             :href="`/certifications/${related.slug}`"
-                            class="group bg-white rounded-xl p-5 border border-navy-100 hover:border-primary-200 hover:shadow-lg transition-all duration-300"
+                            class="group bg-white dark:bg-navy-800 rounded-xl p-5 border border-navy-100 dark:border-navy-700 hover:border-primary-200 dark:hover:border-primary-800 hover:shadow-lg transition-all duration-300"
                         >
                             <div class="flex items-center mb-3">
                                 <span class="text-2xl font-black bg-gradient-to-r from-primary-500 to-blue-500 bg-clip-text text-transparent mr-3">
                                     {{ related.code }}
                                 </span>
                             </div>
-                            <h4 class="font-semibold text-navy-900 group-hover:text-primary-600 transition-colors mb-2">{{ related.name }}</h4>
-                            <span class="text-xs px-2 py-1 bg-navy-100 text-navy-600 rounded-full">{{ related.level }}</span>
+                            <h4 class="font-semibold text-navy-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors mb-2">{{ related.name }}</h4>
+                            <span class="text-xs px-2 py-1 bg-navy-100 dark:bg-navy-700 text-navy-600 dark:text-navy-300 rounded-full">{{ related.level }}</span>
                         </a>
                     </div>
                 </div>
